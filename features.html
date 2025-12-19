@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Features - GreenRadius | Powerful Tools for Community Sustainability</title>
+  <meta name="description" content="Discover GreenRadius features: gamified challenges, impact tracking, community tools, green maps, rewards, and sharing economy features.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="images/green-logo.png">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes slide-in-left {
+      from { opacity: 0; transform: translateX(-50px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    @keyframes slide-in-right {
+      from { opacity: 0; transform: translateX(50px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    @keyframes progress-fill {
+      from { width: 0%; }
+      to { width: 75%; }
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.6); }
+    }
+    
+    .animate-fade-in { animation: fade-in 0.8s ease-out; }
+    .animate-slide-in-left { animation: slide-in-left 0.8s ease-out; }
+    .animate-slide-in-right { animation: slide-in-right 0.8s ease-out; }
+    .animate-progress-fill { animation: progress-fill 2s ease-out; }
+    
+    .hover-lift {
+      transition: all 0.3s ease;
+    }
+    .hover-lift:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+    
+    .waitlist-badge {
+      background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900">
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-lg z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center">
+          <a href="index.html" class="flex items-center space-x-2">
+            <img src="images/green-logo.png" alt="GreenRadius Logo" width="28" height="28" class="object-contain">
+            <span class="font-bold text-xl bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">
+              GreenRadius
+            </span>
+          </a>
+          <div class="hidden md:flex ml-10 space-x-8">
+            <a href="features.html" class="text-emerald-600 font-medium">Features</a>
+            <a href="index.html#how-it-works" class="text-gray-700 hover:text-emerald-600 transition">How it Works</a>
+            <a href="index.html#impact" class="text-gray-700 hover:text-emerald-600 transition">Impact</a>
+            <a href="about.html" class="text-gray-700 hover:text-emerald-600 transition">About</a>
+          </div>
+        </div>
+        <div class="hidden md:flex items-center space-x-4">
+          <span class="waitlist-badge text-white text-xs px-3 py-1 rounded-full font-semibold">
+            🚀 Coming Soon
+          </span>
+          <a href="index.html#waitlist">
+            <button class="bg-emerald-600 text-white px-6 py-2 rounded-full hover:bg-emerald-700 transition hover:scale-105 font-semibold">
+              Join Waitlist →
+            </button>
+          </a>
+        </div>
+        <button id="mobile-menu-btn" class="md:hidden">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+      <div class="px-2 pt-2 pb-3 space-y-1">
+        <a href="features.html" class="block px-3 py-2 text-emerald-600 font-medium">Features</a>
+        <a href="index.html#how-it-works" class="block px-3 py-2 text-gray-700">How it Works</a>
+        <a href="index.html#impact" class="block px-3 py-2 text-gray-700">Impact</a>
+        <a href="about.html" class="block px-3 py-2 text-gray-700">About</a>
+        <a href="index.html#waitlist" class="block">
+          <button class="w-full bg-emerald-600 text-white px-3 py-2 rounded-lg font-semibold">Join Waitlist →</button>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="pt-32 pb-20 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-emerald-50 to-blue-50 opacity-50"></div>
+    <div class="relative max-w-7xl mx-auto px-4 text-center animate-fade-in">
+      <span class="inline-block px-4 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm font-semibold mb-6">
+        🚀 Everything You Need
+      </span>
+      <h1 class="text-5xl md:text-6xl font-bold mb-6">
+        Powerful Features for
+        <span class="block bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent mt-2">
+          Real Environmental Impact
+        </span>
+      </h1>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+        From gamified challenges to real-time impact tracking, discover how GreenRadius 
+        makes sustainable living achievable, measurable, and fun for everyone.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <div class="max-w-md mx-auto w-full">
+          <form id="features-waitlist-form" class="flex flex-col sm:flex-row gap-3" action="https://app.convertkit.com/forms/YOUR_FORM_ID/subscriptions" method="post" data-sv-form="YOUR_FORM_ID">
+            <input 
+              type="email" 
+              name="email_address"
+              placeholder="📧 Enter your email" 
+              required
+              class="flex-1 px-6 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
+            >
+            <button type="submit" class="bg-emerald-600 text-white px-8 py-3 rounded-full hover:bg-emerald-700 transition hover:scale-105 font-semibold whitespace-nowrap">
+              Join Waitlist 🚀
+            </button>
+          </form>
+          <p class="text-sm text-gray-500 mt-3 text-center">✓ Free to join • ✓ No spam • ✓ Early access perks</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Categories Navigation -->
+  <section class="py-8 bg-gray-50 sticky top-16 z-40">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex overflow-x-auto gap-4 pb-2 scrollbar-hide">
+        <a href="#challenges" class="flex-shrink-0 px-6 py-3 bg-white rounded-full hover:bg-emerald-50 transition border border-gray-200">
+          🎯 Challenges
+        </a>
+        <a href="#tracking" class="flex-shrink-0 px-6 py-3 bg-white rounded-full hover:bg-emerald-50 transition border border-gray-200">
+          📊 Impact Tracking
+        </a>
+        <a href="#community" class="flex-shrink-0 px-6 py-3 bg-white rounded-full hover:bg-emerald-50 transition border border-gray-200">
+          👥 Community
+        </a>
+        <a href="#map" class="flex-shrink-0 px-6 py-3 bg-white rounded-full hover:bg-emerald-50 transition border border-gray-200">
+          🗺️ Green Map
+        </a>
+        <a href="#rewards" class="flex-shrink-0 px-6 py-3 bg-white rounded-full hover:bg-emerald-50 transition border border-gray-200">
+          🏆 Rewards
+        </a>
+        <a href="#sharing" class="flex-shrink-0 px-6 py-3 bg-white rounded-full hover:bg-emerald-50 transition border border-gray-200">
+          🤝 Sharing
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Challenges Section -->
+  <section id="challenges" class="py-20">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="animate-slide-in-left">
+          <span class="text-emerald-600 font-semibold text-sm uppercase tracking-wider">Gamified Challenges</span>
+          <h2 class="text-4xl font-bold mt-4 mb-6">
+            Turn Daily Actions Into 
+            <span class="bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">Environmental Wins</span>
+          </h2>
+          <p class="text-lg text-gray-600 mb-8">
+            Our AI-powered challenge system creates personalized daily missions based on your 
+            lifestyle, location, and impact goals. Every challenge completed earns points and 
+            makes a real difference.
+          </p>
+          
+          <div class="space-y-4 mb-8">
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <span class="text-emerald-600">✓</span>
+              </div>
+              <div>
+                <h4 class="font-semibold mb-1">Daily Personalized Challenges</h4>
+                <p class="text-gray-600 text-sm">AI selects challenges perfect for your skill level and schedule</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <span class="text-emerald-600">✓</span>
+              </div>
+              <div>
+                <h4 class="font-semibold mb-1">Group Challenges</h4>
+                <p class="text-gray-600 text-sm">Team up with neighbors for bigger impact and more fun</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <span class="text-emerald-600">✓</span>
+              </div>
+              <div>
+                <h4 class="font-semibold mb-1">Photo Proof & Verification</h4>
+                <p class="text-gray-600 text-sm">Share your progress and inspire others with photo updates</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="relative animate-slide-in-right">
+          <!-- Mock challenge cards -->
+          <div class="space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
+              <div class="flex items-start justify-between mb-4">
+                <div>
+                  <div class="text-2xl mb-2">🚴</div>
+                  <h3 class="font-bold text-lg">Bike to Work Week</h3>
+                  <p class="text-gray-600 text-sm mt-1">Bike instead of drive for 5 days</p>
+                </div>
+                <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm font-semibold">
+                  +100 pts
+                </span>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex -space-x-2">
+                  <div class="w-8 h-8 bg-emerald-400 rounded-full border-2 border-white"></div>
+                  <div class="w-8 h-8 bg-blue-400 rounded-full border-2 border-white"></div>
+                  <div class="w-8 h-8 bg-purple-400 rounded-full border-2 border-white"></div>
+                  <div class="w-8 h-8 bg-gray-200 rounded-full border-2 border-white flex items-center justify-center text-xs">
+                    +12
+                  </div>
+                </div>
+                <span class="text-emerald-600 font-semibold text-sm">Join Challenge →</span>
+              </div>
+            </div>
+            
+            <div class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl p-6 border-2 border-yellow-200">
+              <div class="flex items-start justify-between mb-4">
+                <div>
+                  <div class="text-2xl mb-2">♻️</div>
+                  <h3 class="font-bold text-lg">Zero Waste Day</h3>
+                  <p class="text-gray-600 text-sm mt-1">Produce no trash for 24 hours</p>
+                </div>
+                <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm font-semibold">
+                  +50 pts
+                </span>
+              </div>
+              <div class="bg-white/50 rounded-lg p-3">
+                <div class="flex justify-between text-sm mb-1">
+                  <span>Progress</span>
+                  <span class="font-semibold">75%</span>
+                </div>
+                <div class="h-2 bg-white rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-yellow-400 to-orange-400 animate-progress-fill" style="width: 75%;"></div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-6 opacity-75">
+              <div class="flex items-center gap-3">
+                <div class="text-2xl">🌱</div>
+                <div>
+                  <h3 class="font-bold">Plant a Tree</h3>
+                  <p class="text-gray-600 text-sm">Coming tomorrow</p>
+                </div>
+                <span class="ml-auto text-gray-400">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Impact Tracking Section -->
+  <section id="tracking" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="order-2 lg:order-1">
+          <!-- Mock dashboard -->
+          <div class="bg-white rounded-2xl shadow-xl p-6">
+            <h3 class="font-bold text-lg mb-4">Your Environmental Impact</h3>
+            
+            <!-- Stats grid -->
+            <div class="grid grid-cols-2 gap-4 mb-6">
+              <div class="bg-emerald-50 rounded-xl p-4">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-3xl">🌍</span>
+                  <span class="text-xs text-emerald-600 font-semibold">+23%</span>
+                </div>
+                <div class="text-2xl font-bold">124 kg</div>
+                <div class="text-sm text-gray-600">CO₂ Saved</div>
+              </div>
+              <div class="bg-blue-50 rounded-xl p-4">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-3xl">💧</span>
+                  <span class="text-xs text-blue-600 font-semibold">+15%</span>
+                </div>
+                <div class="text-2xl font-bold">3,420 L</div>
+                <div class="text-sm text-gray-600">Water Saved</div>
+              </div>
+            </div>
+            
+            <!-- Chart -->
+            <div class="bg-gray-50 rounded-xl p-4">
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-sm font-semibold">Weekly Progress</span>
+                <span class="text-xs text-gray-500">Last 7 days</span>
+              </div>
+              <div class="flex items-end justify-between h-32 gap-2">
+                <div class="flex-1 bg-emerald-200 rounded-t" style="height: 60%;"></div>
+                <div class="flex-1 bg-emerald-300 rounded-t" style="height: 80%;"></div>
+                <div class="flex-1 bg-emerald-400 rounded-t" style="height: 70%;"></div>
+                <div class="flex-1 bg-emerald-500 rounded-t" style="height: 90%;"></div>
+                <div class="flex-1 bg-emerald-600 rounded-t" style="height: 100%;"></div>
+                <div class="flex-1 bg-emerald-400 rounded-t" style="height: 85%;"></div>
+                <div class="flex-1 bg-emerald-300 rounded-t" style="height: 75%;"></div>
+              </div>
+              <div class="flex justify-between mt-2 text-xs text-gray-500">
+                <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="order-1 lg:order-2">
+          <span class="text-emerald-600 font-semibold text-sm uppercase tracking-wider">Impact Tracking</span>
+          <h2 class="text-4xl font-bold mt-4 mb-6">
+            See Your <span class="bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">Real Impact</span>
+            <br>in Real-Time
+          </h2>
+          <p class="text-lg text-gray-600 mb-8">
+            Every action you take is calculated using EPA-verified formulas. Watch your 
+            personal dashboard update in real-time as you complete challenges and make 
+            sustainable choices.
+          </p>
+          
+          <div class="space-y-4 mb-8">
+            <div class="flex items-start gap-3">
+              <span class="text-2xl">📊</span>
+              <div>
+                <h4 class="font-semibold mb-1">Personal Dashboard</h4>
+                <p class="text-gray-600 text-sm">Track CO₂, water, energy saved with beautiful visualizations</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-2xl">📈</span>
+              <div>
+                <h4 class="font-semibold mb-1">Progress Analytics</h4>
+                <p class="text-gray-600 text-sm">See trends, patterns, and improvement areas</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-2xl">🎯</span>
+              <div>
+                <h4 class="font-semibold mb-1">Goal Setting</h4>
+                <p class="text-gray-600 text-sm">Set and track monthly environmental goals</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Community Section -->
+  <section id="community" class="py-20">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-16">
+        <span class="text-emerald-600 font-semibold text-sm uppercase tracking-wider">Community Features</span>
+        <h2 class="text-4xl font-bold mt-4 mb-4">
+          Stronger Together, <span class="bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">Greener Together</span>
+        </h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Connect with neighbors, share resources, and multiply your impact through community action
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 hover:scale-105">
+          <div class="w-14 h-14 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-xl flex items-center justify-center text-2xl text-white mb-4">
+            👥
+          </div>
+          <h3 class="text-xl font-bold mb-2">Neighbor Network</h3>
+          <p class="text-gray-600 mb-4">Connect with eco-minded neighbors, follow their journey, and get inspired by their actions.</p>
+          <ul class="space-y-2 text-sm text-gray-600">
+            <li class="flex items-center gap-2"><span class="text-emerald-600">✓</span>Follow neighbors</li>
+            <li class="flex items-center gap-2"><span class="text-emerald-600">✓</span>Share achievements</li>
+            <li class="flex items-center gap-2"><span class="text-emerald-600">✓</span>Direct messaging</li>
+          </ul>
+        </div>
+        
+        <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 hover:scale-105">
+          <div class="w-14 h-14 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center text-2xl text-white mb-4">
+            📢
+          </div>
+          <h3 class="text-xl font-bold mb-2">Activity Feed</h3>
+          <p class="text-gray-600 mb-4">Stay updated with real-time neighborhood activities, challenges, and environmental wins.</p>
+          <ul class="space-y-2 text-sm text-gray-600">
+            <li class="flex items-center gap-2"><span class="text-emerald-600">✓</span>Live updates</li>
+            <li class="flex items-center gap-2"><span class="text-emerald-600">✓</span>Comment & react</li>
+            <li class="flex items-center gap-2"><span class="text-emerald-600">✓</span>Share milestones</li>
+          </ul>
+        </div>
+        
+        <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 hover:scale-105">
+          <div class="w-14 h-14 bg-gradient-to-br from-purple-400 to-purple-600 rounded-xl flex items-center justify-center text-2xl text-white mb-4">
+            🎉
+          </div>
+          <h3 class="text-xl font-bold mb-2">Local Events</h3>
+          <p class="text-gray-600 mb-4">Organize and join local environmental events, cleanups, and green initiatives.</p>
+          <ul class="space-y-2 text-sm text-gray-600">
+            <li class="flex items-center gap-2"><span class="text-emerald-600">✓</span>Create events</li>
+            <li class="flex items-center gap-2"><span class="text-emerald-600">✓</span>RSVP system</li>
+            <li class="flex items-center gap-2"><span class="text-emerald-600">✓</span>Event reminders</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Map Section -->
+  <section id="map" class="py-20 bg-gradient-to-br from-emerald-50 to-blue-50">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <span class="text-emerald-600 font-semibold text-sm uppercase tracking-wider">Green Map</span>
+          <h2 class="text-4xl font-bold mt-4 mb-6">
+            Discover <span class="bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">Green Spots</span>
+            <br>In Your Neighborhood
+          </h2>
+          <p class="text-lg text-gray-600 mb-8">
+            Our interactive map shows you all the eco-friendly locations near you. From 
+            zero-waste stores to community gardens, find everything you need to live sustainably.
+          </p>
+          
+          <div class="grid grid-cols-2 gap-4 mb-8">
+            <div class="bg-white rounded-xl p-4">
+              <div class="text-2xl mb-2">🛍️</div>
+              <h4 class="font-semibold">Green Stores</h4>
+              <p class="text-sm text-gray-600">Package-free shops</p>
+            </div>
+            <div class="bg-white rounded-xl p-4">
+              <div class="text-2xl mb-2">♻️</div>
+              <h4 class="font-semibold">Recycling Centers</h4>
+              <p class="text-sm text-gray-600">Proper disposal sites</p>
+            </div>
+            <div class="bg-white rounded-xl p-4">
+              <div class="text-2xl mb-2">🌱</div>
+              <h4 class="font-semibold">Gardens</h4>
+              <p class="text-sm text-gray-600">Community gardens</p>
+            </div>
+            <div class="bg-white rounded-xl p-4">
+              <div class="text-2xl mb-2">🚲</div>
+              <h4 class="font-semibold">Bike Stations</h4>
+              <p class="text-sm text-gray-600">Sharing stations</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="relative">
+          <!-- Mock map -->
+          <div class="bg-gradient-to-br from-emerald-100 to-blue-100 rounded-2xl p-8 relative h-96">
+            <!-- Map dots with pulse animation -->
+            <div class="absolute top-12 left-16 w-4 h-4 bg-emerald-500 rounded-full animate-pulse"></div>
+            <div class="absolute top-24 right-20 w-4 h-4 bg-blue-500 rounded-full animate-pulse" style="animation-delay: 0.5s;"></div>
+            <div class="absolute bottom-20 left-32 w-4 h-4 bg-purple-500 rounded-full animate-pulse" style="animation-delay: 1s;"></div>
+            <div class="absolute bottom-32 right-16 w-4 h-4 bg-yellow-500 rounded-full animate-pulse" style="animation-delay: 1.5s;"></div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-red-500 rounded-full">
+              <div class="absolute inset-0 bg-red-500 rounded-full animate-ping opacity-75"></div>
+            </div>
+            
+            <!-- Info popup -->
+            <div class="absolute bottom-4 left-4 right-4 bg-white rounded-xl shadow-lg p-4">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center text-xl">🛍️</div>
+                <div class="flex-1">
+                  <h4 class="font-semibold">Zero Waste Market</h4>
+                  <p class="text-sm text-gray-600">0.3 miles away • Open now</p>
+                </div>
+                <span class="text-emerald-600 font-semibold text-sm">Navigate →</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rewards Section -->
+  <section id="rewards" class="py-20">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-16">
+        <span class="text-emerald-600 font-semibold text-sm uppercase tracking-wider">Rewards & Recognition</span>
+        <h2 class="text-4xl font-bold mt-4 mb-4">
+          Get Rewarded for <span class="bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">Going Green</span>
+        </h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Earn points, unlock badges, climb leaderboards, and get real rewards from local businesses
+        </p>
+      </div>
+      
+      <!-- Rewards Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl p-6 text-center hover:shadow-lg transition-all duration-300">
+          <div class="text-5xl mb-4 animate-bounce">🏆</div>
+          <h3 class="font-bold text-lg mb-2">Leaderboards</h3>
+          <p class="text-gray-600 text-sm">Compete with neighbors weekly, monthly, and all-time</p>
+        </div>
+        
+        <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 text-center hover:shadow-lg transition-all duration-300">
+          <div class="text-5xl mb-4 animate-bounce" style="animation-delay: 0.5s;">🎖️</div>
+          <h3 class="font-bold text-lg mb-2">Achievement Badges</h3>
+          <p class="text-gray-600 text-sm">Unlock special badges for milestones and streaks</p>
+        </div>
+        
+        <div class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-6 text-center hover:shadow-lg transition-all duration-300">
+          <div class="text-5xl mb-4 animate-bounce" style="animation-delay: 1s;">💰</div>
+          <h3 class="font-bold text-lg mb-2">Real Rewards</h3>
+          <p class="text-gray-600 text-sm">Get discounts and freebies from green businesses</p>
+        </div>
+        
+        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 text-center hover:shadow-lg transition-all duration-300">
+          <div class="text-5xl mb-4 animate-bounce" style="animation-delay: 1.5s;">⭐</div>
+          <h3 class="font-bold text-lg mb-2">Status Levels</h3>
+          <p class="text-gray-600 text-sm">Progress from Seedling to Eco Warrior</p>
+        </div>
+      </div>
+      
+      <!-- Sample Badges -->
+      <div class="bg-white rounded-2xl shadow-lg p-8">
+        <h3 class="text-xl font-bold mb-6 text-center">Your Achievement Collection</h3>
+        <div class="grid grid-cols-3 md:grid-cols-6 gap-4">
+          <div class="text-center">
+            <div class="w-20 h-20 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center text-3xl text-white mx-auto mb-2">🌱</div>
+            <p class="text-xs font-semibold">First Step</p>
+          </div>
+          <div class="text-center">
+            <div class="w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center text-3xl text-white mx-auto mb-2">🚴</div>
+            <p class="text-xs font-semibold">Green Commuter</p>
+          </div>
+          <div class="text-center">
+            <div class="w-20 h-20 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center text-3xl text-white mx-auto mb-2">♻️</div>
+            <p class="text-xs font-semibold">Recycling Pro</p>
+          </div>
+          <div class="text-center">
+            <div class="w-20 h-20 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center text-3xl text-white mx-auto mb-2">🔥</div>
+            <p class="text-xs font-semibold">30 Day Streak</p>
+          </div>
+          <div class="text-center">
+            <div class="w-20 h-20 bg-gradient-to-br from-pink-400 to-red-500 rounded-2xl flex items-center justify-center text-3xl text-white mx-auto mb-2">💪</div>
+            <p class="text-xs font-semibold">Challenge Master</p>
+          </div>
+          <div class="text-center opacity-50">
+            <div class="w-20 h-20 bg-gray-200 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-2">🔒</div>
+            <p class="text-xs font-semibold">Locked</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sharing Economy Section -->
+  <section id="sharing" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <span class="text-emerald-600 font-semibold text-sm uppercase tracking-wider">Sharing Economy</span>
+          <h2 class="text-4xl font-bold mt-4 mb-6">
+            Share More, <span class="bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">Waste Less</span>
+          </h2>
+          <p class="text-lg text-gray-600 mb-8">
+            Why buy when you can borrow? Connect with neighbors to share tools, books, 
+            equipment, and more. Reduce waste, save money, and build community bonds.
+          </p>
+          
+          <div class="space-y-4 mb-8">
+            <div class="flex items-start gap-3">
+              <span class="text-2xl">🔧</span>
+              <div>
+                <h4 class="font-semibold mb-1">Tool Library</h4>
+                <p class="text-gray-600 text-sm">Borrow tools instead of buying for one-time use</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-2xl">📚</span>
+              <div>
+                <h4 class="font-semibold mb-1">Book Exchange</h4>
+                <p class="text-gray-600 text-sm">Share books and magazines with your community</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-2xl">🎮</span>
+              <div>
+                <h4 class="font-semibold mb-1">Toy & Game Swap</h4>
+                <p class="text-gray-600 text-sm">Kids outgrown toys find new homes</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div>
+          <!-- Mock sharing interface -->
+          <div class="bg-white rounded-2xl shadow-xl p-6">
+            <h3 class="font-bold text-lg mb-4">Available to Borrow</h3>
+            <div class="space-y-3">
+              <div class="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition cursor-pointer">
+                <div class="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center text-2xl">🪜</div>
+                <div class="flex-1">
+                  <h4 class="font-semibold">Extension Ladder</h4>
+                  <p class="text-sm text-gray-600">From Mike R. • 0.2 miles</p>
+                </div>
+                <span class="text-emerald-600 font-semibold text-sm">Request →</span>
+              </div>
+              
+              <div class="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition cursor-pointer">
+                <div class="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center text-2xl">🔨</div>
+                <div class="flex-1">
+                  <h4 class="font-semibold">Power Drill</h4>
+                  <p class="text-sm text-gray-600">From Sarah C. • 0.5 miles</p>
+                </div>
+                <span class="text-emerald-600 font-semibold text-sm">Request →</span>
+              </div>
+              
+              <div class="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition cursor-pointer">
+                <div class="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center text-2xl">🎪</div>
+                <div class="flex-1">
+                  <h4 class="font-semibold">Camping Tent (4 person)</h4>
+                  <p class="text-sm text-gray-600">From Building 2 • Same building</p>
+                </div>
+                <span class="text-emerald-600 font-semibold text-sm">Request →</span>
+              </div>
+            </div>
+            
+            <button class="w-full mt-4 bg-emerald-50 text-emerald-600 py-3 rounded-lg font-semibold hover:bg-emerald-100 transition border border-emerald-200">
+              + Share Your Items
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Additional Features Grid -->
+  <section class="py-20">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold mb-4">And So Much More...</h2>
+        <p class="text-xl text-gray-600">Everything you need for your sustainable journey</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300">
+          <div class="text-3xl mb-3">📱</div>
+          <h3 class="font-bold text-lg mb-2">Mobile Apps</h3>
+          <p class="text-gray-600 text-sm">iOS and Android apps for on-the-go impact</p>
+        </div>
+        
+        <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300">
+          <div class="text-3xl mb-3">🔔</div>
+          <h3 class="font-bold text-lg mb-2">Smart Notifications</h3>
+          <p class="text-gray-600 text-sm">Timely reminders and neighborhood updates</p>
+        </div>
+        
+        <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300">
+          <div class="text-3xl mb-3">🌡️</div>
+          <h3 class="font-bold text-lg mb-2">Weather Integration</h3>
+          <p class="text-gray-600 text-sm">Weather-based challenge suggestions</p>
+        </div>
+        
+        <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300">
+          <div class="text-3xl mb-3">📸</div>
+          <h3 class="font-bold text-lg mb-2">Photo Sharing</h3>
+          <p class="text-gray-600 text-sm">Share your green journey visually</p>
+        </div>
+        
+        <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300">
+          <div class="text-3xl mb-3">🎓</div>
+          <h3 class="font-bold text-lg mb-2">Green Education</h3>
+          <p class="text-gray-600 text-sm">Learn with tips, guides, and resources</p>
+        </div>
+        
+        <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300">
+          <div class="text-3xl mb-3">🔗</div>
+          <h3 class="font-bold text-lg mb-2">API Access</h3>
+          <p class="text-gray-600 text-sm">Integrate with your favorite apps</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 bg-gradient-to-r from-emerald-600 to-blue-600 text-white">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h2 class="text-4xl md:text-5xl font-bold mb-6">
+        Ready to Experience All These Features?
+      </h2>
+      <p class="text-xl mb-8 opacity-90">
+        Join the waitlist and be the first to transform your neighborhood
+      </p>
+      <div class="max-w-md mx-auto">
+        <form id="features-footer-form" class="flex flex-col sm:flex-row gap-3" action="https://app.convertkit.com/forms/YOUR_FORM_ID/subscriptions" method="post" data-sv-form="YOUR_FORM_ID">
+          <input 
+            type="email" 
+            name="email_address"
+            placeholder="📧 Enter your email" 
+            required
+            class="flex-1 px-6 py-4 rounded-full text-gray-900 focus:outline-none focus:ring-2 focus:ring-white"
+          >
+          <button type="submit" class="bg-white text-emerald-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition hover:scale-105 whitespace-nowrap">
+            Join Waitlist →
+          </button>
+        </form>
+      </div>
+      <p class="mt-6 text-sm opacity-75">
+        No spam • Early access guaranteed • Be among the first 1,000
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-16">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid md:grid-cols-4 gap-8 mb-8">
+        <div class="md:col-span-2">
+          <div class="flex items-center space-x-2 mb-4">
+            <img src="images/green-logo.png" alt="GreenRadius Logo" width="28" height="28" class="object-contain">
+            <span class="font-bold text-xl">GreenRadius</span>
+          </div>
+          <p class="text-gray-400 mb-4">Making sustainable living social. Coming 2026.</p>
+          <div class="flex gap-4">
+            <a href="#" class="text-gray-400 hover:text-white transition">📧</a>
+            <a href="#" class="text-gray-400 hover:text-white transition">🐦</a>
+            <a href="#" class="text-gray-400 hover:text-white transition">📷</a>
+            <a href="#" class="text-gray-400 hover:text-white transition">💼</a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="font-semibold mb-4">Product</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="features.html" class="hover:text-white transition">Features</a></li>
+            <li><a href="index.html#faq" class="hover:text-white transition">FAQ</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="font-semibold mb-4">Company</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="about.html" class="hover:text-white transition">About</a></li>
+         </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+        <p>© 2025 GreenRadius. Made with 💚 for our planet.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ConvertKit Script -->
+  <script src="https://f.convertkit.com/ckjs/ck.5.js"></script>
+  
+  <script>
+    // Mobile menu toggle
+    document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+    
+    // ConvertKit AJAX form submission
+    async function submitToConvertKit(form) {
+      const email = form.querySelector('input[name="email_address"]').value;
+      const formAction = form.getAttribute('action');
+      
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<span class="animate-pulse">Joining...</span>';
+      submitBtn.disabled = true;
+      
+      try {
+        const response = await fetch(formAction, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({ email_address: email })
+        });
+        
+        if (response.ok) {
+          form.innerHTML = `
+            <div class="text-center py-4">
+              <div class="text-4xl mb-2">🎉</div>
+              <p class="text-lg font-semibold">You're on the list!</p>
+              <p class="text-sm opacity-75">Check your email for confirmation.</p>
+            </div>
+          `;
+        } else {
+          throw new Error('Subscription failed');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        form.submit();
+      }
+    }
+    
+    // Add event listeners to all forms
+    document.querySelectorAll('form[data-sv-form]').forEach(form => {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        submitToConvertKit(this);
+      });
+    });
+  </script>
+</body>
+</html>
