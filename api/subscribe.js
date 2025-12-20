@@ -49,7 +49,7 @@ export default async function handler(req, res) {
       CITY: city || '',
       STATE: state || '',
       COMPANY: company || '',
-      COMMENT: comment || ''
+      COMMENT: (comment !== undefined && comment !== null) ? String(comment) : ''
     };
 
     const response = await fetch(url, {
