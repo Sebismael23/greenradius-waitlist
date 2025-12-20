@@ -92,7 +92,7 @@
           <a href="#" class="flex items-center space-x-2">
             <img src="images/green-logo.png" alt="GreenRadius Logo" width="28" height="28" class="object-contain">
             <span class="font-bold text-xl bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">
-              GreenRadiusooo
+              GreenRadius
             </span>
           </a>
           <div class="hidden md:flex ml-10 space-x-8">
@@ -624,7 +624,7 @@
       <div class="w-10 h-10 bg-gradient-to-br from-emerald-400 to-blue-500 rounded-full flex items-center justify-center text-white text-lg">🌱</div>
       <div>
         <div class="font-semibold" id="notification-location">Someone</div>
-        <div class="text-sm text-gray-600" id="notification-message">just joined the waitlist! 🎉</div>
+        <div class="text-sm text-gray-600" id="notification-message"></div>
       </div>
     </div>
   </div>
@@ -737,7 +737,9 @@
         if (data.success) {
           modalForm.classList.add('hidden');
           modalFormMessage.classList.remove('hidden');
-          modalFormMessage.innerHTML = `<div class="text-center py-4"><div class="text-4xl mb-2">🎉</div><p class="text-lg font-semibold">You're on the list!</p><p class="text-sm opacity-75">${data.message}</p></div>`;
+          modalFormMessage.innerHTML = `<div class="text-center py-4"><div class="text-4xl mb-2">🎉</div><p class="text-lg font-semibold">You're on the waitlist!</p><p class="text-sm opacity-75">We'll notify you when GreenRadius launches in your area.</p></div>`;
+          // Also update notification message immediately
+          document.getElementById('notification-message').textContent = 'joined the waitlist! 🎉';
           fetchRecentSubscribers();
         } else {
           throw new Error(data.error || 'Subscription failed');
