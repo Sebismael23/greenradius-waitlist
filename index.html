@@ -905,6 +905,7 @@
         } else {
           locationEl.textContent = `Someone`;
         }
+        // Always use 'joined the waitlist' (past tense)
         messageEl.textContent = `joined the waitlist${timeAgo ? ' ' + timeAgo : ''}! 🎉`;
 
         // Cycle through subscribers
@@ -957,5 +958,27 @@
       }, 60000);
     });
   </script>
-</body>
-</html>
+      try {
+        const response = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+        const data = await response.json();
+        if (data.success) {
+          modalForm.classList.add('hidden');
+          modalFormMessage.classList.remove('hidden');
+          // Always show clear feedback
+          modalFormMessage.innerHTML = `<div class="text-center py-4"><div class="text-4xl mb-2">🎉</div><p class="text-lg font-semibold">You're on the waitlist!</p><p class="text-sm opacity-75">We'll notify you when GreenRadius launches in your area.</p></div>`;
+          fetchRecentSubscribers();
+        } else {
+          throw new Error(data.error || 'Subscription failed');
+        }
+      } catch (error) {
+        modalFormMessage.classList.remove('hidden');
+        modalFormMessage.innerHTML = `<p class="text-red-500 text-sm mt-2">Something went wrong. Please try again.</p>`;
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+      }
