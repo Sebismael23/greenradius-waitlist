@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GreenRadius - Turn Your Neighborhood Into an Environmental Force</title>
+  <title>GreenRadius</title>
   <meta name="description" content="Join the waitlist for GreenRadius - the app that helps you make real environmental impact with your neighbors through fun challenges and community action.">
   
   <!-- Favicon -->
@@ -106,11 +106,9 @@
           <span class="waitlist-badge text-white text-xs px-3 py-1 rounded-full font-semibold">
             🚀 Coming Soon
           </span>
-          <a href="#waitlist">
-            <button class="bg-emerald-600 text-white px-6 py-2 rounded-full hover:bg-emerald-700 transition hover:scale-105 font-semibold">
-              Join Waitlist →
-            </button>
-          </a>
+          <button type="button" class="bg-emerald-600 text-white px-6 py-2 rounded-full hover:bg-emerald-700 transition hover:scale-105 font-semibold join-waitlist-btn">
+            Join Waitlist →
+          </button>
         </div>
         <button id="mobile-menu-btn" class="md:hidden">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -128,7 +126,7 @@
         <a href="#impact" class="block px-3 py-2 text-gray-700">Impact</a>
         <a href="about.html" class="block px-3 py-2 text-gray-700">About</a>
         <a href="#waitlist" class="block">
-          <button class="w-full bg-emerald-600 text-white px-3 py-2 rounded-lg font-semibold">Join Waitlist →</button>
+          <button type="button" class="w-full bg-emerald-600 text-white px-3 py-2 rounded-lg font-semibold join-waitlist-btn">Join Waitlist →</button>
         </a>
       </div>
     </div>
@@ -173,7 +171,7 @@
                 required
                 class="flex-1 px-6 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
               >
-              <button type="submit" class="bg-emerald-600 text-white px-8 py-3 rounded-full hover:bg-emerald-700 transition hover:scale-105 font-semibold whitespace-nowrap">
+              <button type="button" class="bg-emerald-600 text-white px-8 py-3 rounded-full hover:bg-emerald-700 transition hover:scale-105 font-semibold whitespace-nowrap join-waitlist-btn" data-email-input="email-input">
                 Join Waitlist 🚀
               </button>
             </div>
@@ -562,8 +560,11 @@
             required
             class="flex-1 px-6 py-4 rounded-full text-gray-900 focus:outline-none focus:ring-2 focus:ring-white"
           >
-          <button type="submit" class="bg-white text-emerald-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition hover:scale-105 shadow-xl whitespace-nowrap">
+          <button type="button" class="bg-white text-emerald-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition hover:scale-105 shadow-xl whitespace-nowrap join-waitlist-btn" data-email-input="footer-email-input">
             Join Waitlist 🚀
+          </button>
+        </div>
+      </form>
           </button>
         </div>
       </form>
@@ -628,10 +629,121 @@
     </div>
   </div>
 
+  <!-- Waitlist Modal -->
+  <div id="waitlist-modal" class="fixed inset-0 bg-black/40 z-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-lg w-full relative">
+      <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl">×</button>
+      <h2 class="text-2xl font-bold mb-4 text-center">Join the Waitlist</h2>
+      <form id="modal-waitlist-form" class="space-y-4">
+        <div class="flex gap-4">
+          <input type="text" name="first_name" id="modal-first-name" placeholder="First Name" required class="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500">
+          <input type="text" name="last_name" id="modal-last-name" placeholder="Last Name" required class="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500">
+        </div>
+        <input type="email" name="email_address" id="modal-email" placeholder="Email" required class="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500">
+        <input type="text" name="city" id="modal-city" placeholder="City" required class="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500">
+        <input type="text" name="company" id="modal-company" placeholder="Company (optional)" class="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500">
+        <textarea name="comment" id="modal-comment" placeholder="What are you excited about, want, or any concerns?" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-emerald-500"></textarea>
+        <button type="submit" class="w-full bg-emerald-600 text-white py-3 rounded-full font-semibold hover:bg-emerald-700 transition hover:scale-105">Submit</button>
+        <div id="modal-form-message" class="hidden"></div>
+      </form>
+    </div>
+  </div>
+
   <script>
     // Mobile menu toggle
     document.getElementById('mobile-menu-btn').addEventListener('click', function() {
       document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+
+    // Modal logic
+    const waitlistModal = document.getElementById('waitlist-modal');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const modalForm = document.getElementById('modal-waitlist-form');
+    const modalEmail = document.getElementById('modal-email');
+    const modalFormMessage = document.getElementById('modal-form-message');
+
+    function openWaitlistModal(email = '') {
+      waitlistModal.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+      if (email) {
+        modalEmail.value = email;
+      } else {
+        modalEmail.value = '';
+      }
+    }
+
+    function closeWaitlistModal() {
+      waitlistModal.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+      modalForm.reset();
+      modalFormMessage.classList.add('hidden');
+      modalFormMessage.innerHTML = '';
+    }
+
+    closeModalBtn.addEventListener('click', closeWaitlistModal);
+    waitlistModal.addEventListener('click', function(e) {
+      if (e.target === waitlistModal) closeWaitlistModal();
+    });
+
+    // Attach modal open to all join buttons (event delegation) after DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+      document.body.addEventListener('click', function(e) {
+        const btn = e.target.closest('.join-waitlist-btn');
+        if (btn) {
+          e.preventDefault();
+          // Check if button has data-email-input attribute
+          const emailInputId = btn.getAttribute('data-email-input');
+          let email = '';
+          if (emailInputId) {
+            const input = document.getElementById(emailInputId);
+            if (input) email = input.value;
+          }
+          openWaitlistModal(email);
+        }
+      });
+    });
+
+    // Modal form submission
+    modalForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const submitBtn = modalForm.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<span class="animate-pulse">Joining...</span>';
+      submitBtn.disabled = true;
+
+      // Gather form data
+      const formData = {
+        first_name: document.getElementById('modal-first-name').value,
+        last_name: document.getElementById('modal-last-name').value,
+        email_address: document.getElementById('modal-email').value,
+        city: document.getElementById('modal-city').value,
+        company: document.getElementById('modal-company').value,
+        comment: document.getElementById('modal-comment').value
+      };
+
+      try {
+        const response = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+        const data = await response.json();
+        if (data.success) {
+          modalForm.classList.add('hidden');
+          modalFormMessage.classList.remove('hidden');
+          modalFormMessage.innerHTML = `<div class="text-center py-4"><div class="text-4xl mb-2">🎉</div><p class="text-lg font-semibold">You're on the list!</p><p class="text-sm opacity-75">${data.message}</p></div>`;
+          fetchRecentSubscribers();
+        } else {
+          throw new Error(data.error || 'Subscription failed');
+        }
+      } catch (error) {
+        modalFormMessage.classList.remove('hidden');
+        modalFormMessage.innerHTML = `<p class="text-red-500 text-sm mt-2">Something went wrong. Please try again.</p>`;
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+      }
     });
     
     // Tab functionality
@@ -761,26 +873,32 @@
       if (footerCountEl) footerCountEl.textContent = count;
     }
     
-    // Show notification with real subscriber data
+    // Show notification with real subscriber data (city-aware)
     function showNotification() {
       const notification = document.getElementById('notification');
       const locationEl = document.getElementById('notification-location');
       const messageEl = document.getElementById('notification-message');
-      
+
       if (recentSubscribers.length > 0) {
         const subscriber = recentSubscribers[currentNotificationIndex];
-        const location = subscriber.location || 'somewhere awesome';
+        // Prefer city, fallback to location, fallback to generic
+        const city = subscriber.city && subscriber.city.trim() ? subscriber.city.trim() : '';
+        const location = city || (subscriber.location && subscriber.location.trim() ? subscriber.location.trim() : '');
         const timeAgo = getTimeAgo(subscriber.timestamp);
-        
-        locationEl.textContent = `Someone from ${location}`;
-        messageEl.textContent = `joined the waitlist ${timeAgo}! 🎉`;
-        
+
+        if (location) {
+          locationEl.textContent = `Someone from ${location}`;
+        } else {
+          locationEl.textContent = `Someone`;
+        }
+        messageEl.textContent = `joined the waitlist${timeAgo ? ' ' + timeAgo : ''}! 🎉`;
+
         // Cycle through subscribers
         currentNotificationIndex = (currentNotificationIndex + 1) % recentSubscribers.length;
       }
-      
+
       notification.classList.remove('hidden');
-      
+
       // Auto-hide after 5 seconds
       setTimeout(() => {
         hideNotification();
