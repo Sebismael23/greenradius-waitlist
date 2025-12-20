@@ -71,19 +71,27 @@ export default async function handler(req, res) {
     if (response.ok) {
       return res.status(200).json({ 
         success: true, 
-        message: 'Successfully subscribed!' 
+        message: 'Successfully subscribed!'
       });
     } else if (data.title === 'Member Exists') {
       return res.status(200).json({ 
         success: true, 
-        message: "You're already on the list!" 
+        message: "You're already on the list!"
       });
     } else {
-      throw new Error(data.detail || 'Subscription failed');
+      // Return full Mailchimp error response for debugging
+      return res.status(500).json({
+        error: data.detail || 'Subscription failed',
+        mailchimp: data
+      });
     }
 
   } catch (error) {
     console.error('Subscription error:', error);
-    return res.status(500).json({ error: error.message || 'Failed to subscribe' });
+    // If error has a response with data, include it
+    return res.status(500).json({
+      error: error.message || 'Failed to subscribe',
+      mailchimp: error.response?.data || null
+    });
   }
 }
