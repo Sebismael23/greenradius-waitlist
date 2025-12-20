@@ -24,13 +24,33 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { email } = req.body;
 
-    if (!email) {
+    // Accept all fields from modal form
+    const {
+      email_address,
+      first_name,
+      last_name,
+      city,
+      state,
+      company,
+      comment
+    } = req.body;
+
+    if (!email_address) {
       return res.status(400).json({ error: 'Email is required' });
     }
 
     const url = `https://${MAILCHIMP_SERVER_PREFIX}.api.mailchimp.com/3.0/lists/${MAILCHIMP_LIST_ID}/members`;
+
+    // Map fields to Mailchimp merge fields (adjust keys to match your Mailchimp audience fields)
+    const merge_fields = {
+      FNAME: first_name || '',
+      LNAME: last_name || '',
+      CITY: city || '',
+      STATE: state || '',
+      COMPANY: company || '',
+      COMMENT: comment || ''
+    };
 
     const response = await fetch(url, {
       method: 'POST',
@@ -39,9 +59,10 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        email_address: email,
+        email_address,
         status: 'subscribed',
-        tags: ['waitlist', 'early-adopter']
+        tags: ['waitlist', 'early-adopter'],
+        merge_fields
       })
     });
 

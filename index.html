@@ -640,7 +640,10 @@
           <input type="text" name="last_name" id="modal-last-name" placeholder="Last Name" required class="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500">
         </div>
         <input type="email" name="email_address" id="modal-email" placeholder="Email" required class="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500">
-        <input type="text" name="city" id="modal-city" placeholder="City" required class="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500">
+        <div class="flex gap-4">
+          <input type="text" name="city" id="modal-city" placeholder="City" required class="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500">
+          <input type="text" name="state" id="modal-state" placeholder="State" required class="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500">
+        </div>
         <input type="text" name="company" id="modal-company" placeholder="Company (optional)" class="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500">
         <textarea name="comment" id="modal-comment" placeholder="What are you excited about, want, or any concerns?" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-emerald-500"></textarea>
         <button type="submit" class="w-full bg-emerald-600 text-white py-3 rounded-full font-semibold hover:bg-emerald-700 transition hover:scale-105">Submit</button>
@@ -717,6 +720,7 @@
         last_name: document.getElementById('modal-last-name').value,
         email_address: document.getElementById('modal-email').value,
         city: document.getElementById('modal-city').value,
+        state: document.getElementById('modal-state').value,
         company: document.getElementById('modal-company').value,
         comment: document.getElementById('modal-comment').value
       };
@@ -873,7 +877,7 @@
       if (footerCountEl) footerCountEl.textContent = count;
     }
     
-    // Show notification with real subscriber data (city-aware)
+    // Show notification with real subscriber data (city, state aware)
     function showNotification() {
       const notification = document.getElementById('notification');
       const locationEl = document.getElementById('notification-location');
@@ -881,9 +885,19 @@
 
       if (recentSubscribers.length > 0) {
         const subscriber = recentSubscribers[currentNotificationIndex];
-        // Prefer city, fallback to location, fallback to generic
+        // Prefer city, state, fallback to location, fallback to generic
         const city = subscriber.city && subscriber.city.trim() ? subscriber.city.trim() : '';
-        const location = city || (subscriber.location && subscriber.location.trim() ? subscriber.location.trim() : '');
+        const state = subscriber.state && subscriber.state.trim() ? subscriber.state.trim() : '';
+        let location = '';
+        if (city && state) {
+          location = `${city}, ${state}`;
+        } else if (city) {
+          location = city;
+        } else if (state) {
+          location = state;
+        } else if (subscriber.location && subscriber.location.trim()) {
+          location = subscriber.location.trim();
+        }
         const timeAgo = getTimeAgo(subscriber.timestamp);
 
         if (location) {
