@@ -163,7 +163,7 @@
         
         <!-- Waitlist Form -->
         <div id="waitlist" class="max-w-md mx-auto mb-6">
-          <form id="waitlist-form" class="space-y-3" action="https://app.convertkit.com/forms/YOUR_FORM_ID/subscriptions" method="post" data-sv-form="YOUR_FORM_ID" data-uid="YOUR_UID">
+          <form id="waitlist-form" class="space-y-3">
             <div class="flex flex-col sm:flex-row gap-3">
               <input 
                 type="email" 
@@ -552,7 +552,7 @@
         Join <span id="footer-count">847</span> others ready to transform their neighborhoods
       </p>
       
-      <form id="footer-waitlist-form" class="max-w-md mx-auto" action="https://app.convertkit.com/forms/YOUR_FORM_ID/subscriptions" method="post" data-sv-form="YOUR_FORM_ID" data-uid="YOUR_UID">
+      <form id="footer-waitlist-form" class="max-w-md mx-auto">
         <div class="flex flex-col sm:flex-row gap-3">
           <input 
             type="email" 
@@ -620,17 +620,14 @@
   <div id="notification" class="fixed bottom-4 left-4 bg-white rounded-lg shadow-xl p-4 max-w-sm z-40 hidden animate-slide-in">
     <button onclick="hideNotification()" class="absolute top-2 right-2 text-gray-400 hover:text-gray-600">×</button>
     <div class="flex items-center gap-3">
-      <div class="w-10 h-10 bg-gradient-to-br from-emerald-400 to-blue-500 rounded-full"></div>
+      <div class="w-10 h-10 bg-gradient-to-br from-emerald-400 to-blue-500 rounded-full flex items-center justify-center text-white text-lg">🌱</div>
       <div>
-        <div class="font-semibold">Someone from Austin</div>
-        <div class="text-sm text-gray-600">just joined the waitlist! 🎉</div>
+        <div class="font-semibold" id="notification-location">Someone</div>
+        <div class="text-sm text-gray-600" id="notification-message">just joined the waitlist! 🎉</div>
       </div>
     </div>
   </div>
 
-  <!-- ConvertKit Script (loads their form handling) -->
-  <script src="https://f.convertkit.com/ckjs/ck.5.js"></script>
-  
   <script>
     // Mobile menu toggle
     document.getElementById('mobile-menu-btn').addEventListener('click', function() {
@@ -667,10 +664,9 @@
       }
     }
     
-    // ConvertKit AJAX form submission for better UX
-    async function submitToConvertKit(form, formId) {
+    // Mailchimp subscription via Netlify function
+    async function submitToMailchimp(form, formId) {
       const email = form.querySelector('input[name="email_address"]').value;
-      const formAction = form.getAttribute('action');
       
       // Show loading state
       const submitBtn = form.querySelector('button[type="submit"]');
@@ -679,18 +675,17 @@
       submitBtn.disabled = true;
       
       try {
-        const response = await fetch(formAction, {
+        const response = await fetch('/api/subscribe', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
+            'Content-Type': 'application/json'
           },
-          body: JSON.stringify({
-            email_address: email
-          })
+          body: JSON.stringify({ email })
         });
         
-        if (response.ok) {
+        const data = await response.json();
+        
+        if (data.success) {
           // Success!
           if (formId === 'waitlist-form') {
             form.classList.add('hidden');
@@ -701,62 +696,133 @@
               <div class="text-center py-4">
                 <div class="text-4xl mb-2">🎉</div>
                 <p class="text-lg font-semibold">You're on the list!</p>
-                <p class="text-sm opacity-75">Check your email for confirmation.</p>
+                <p class="text-sm opacity-75">${data.message}</p>
               </div>
             `;
           }
           
-          // Track in localStorage for local count display
-          let waitlist = JSON.parse(localStorage.getItem('greenradius_waitlist') || '[]');
-          if (!waitlist.includes(email)) {
-            waitlist.push(email);
-            localStorage.setItem('greenradius_waitlist', JSON.stringify(waitlist));
-          }
-          updateWaitlistCount();
+          // Refresh subscriber data
+          fetchRecentSubscribers();
           
         } else {
-          throw new Error('Subscription failed');
+          throw new Error(data.error || 'Subscription failed');
         }
       } catch (error) {
         console.error('Error:', error);
-        // Fallback: submit the form normally (will redirect)
-        form.submit();
+        // Show error message
+        const messageEl = document.getElementById('form-message');
+        if (messageEl) {
+          messageEl.classList.remove('hidden');
+          messageEl.innerHTML = `<p class="text-red-500 text-sm mt-2">Something went wrong. Please try again.</p>`;
+        }
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
       }
     }
     
-    // Waitlist form handling with ConvertKit
+    // Waitlist form handling
     function handleWaitlistSubmit(e, formId) {
       e.preventDefault();
       const form = document.getElementById(formId);
-      submitToConvertKit(form, formId);
+      submitToMailchimp(form, formId);
     }
     
     document.getElementById('waitlist-form').addEventListener('submit', (e) => handleWaitlistSubmit(e, 'waitlist-form'));
     document.getElementById('footer-waitlist-form').addEventListener('submit', (e) => handleWaitlistSubmit(e, 'footer-waitlist-form'));
     
-    // Update waitlist count display
-    function updateWaitlistCount() {
-      const waitlist = JSON.parse(localStorage.getItem('greenradius_waitlist') || '[]');
-      const baseCount = 847;
-      const newCount = baseCount + waitlist.length;
-      const countEl = document.getElementById('waitlist-count');
-      const footerCountEl = document.getElementById('footer-count');
-      if (countEl) countEl.textContent = newCount + ' people';
-      if (footerCountEl) footerCountEl.textContent = newCount;
+    // Store for recent subscribers
+    let recentSubscribers = [];
+    let currentNotificationIndex = 0;
+    
+    // Fetch recent subscribers from Mailchimp via Netlify function
+    async function fetchRecentSubscribers() {
+      try {
+        const response = await fetch('/api/recent-subscribers');
+        const data = await response.json();
+        
+        if (data.subscribers && data.subscribers.length > 0) {
+          recentSubscribers = data.subscribers;
+        }
+        
+        // Update waitlist count with real data
+        if (data.totalCount) {
+          updateWaitlistCount(data.totalCount);
+        }
+      } catch (error) {
+        console.error('Error fetching subscribers:', error);
+      }
     }
     
-    // Show notification after 5 seconds
-    setTimeout(() => {
-      document.getElementById('notification').classList.remove('hidden');
-    }, 5000);
+    // Update waitlist count display
+    function updateWaitlistCount(count) {
+      const countEl = document.getElementById('waitlist-count');
+      const footerCountEl = document.getElementById('footer-count');
+      if (countEl) countEl.textContent = count + ' people';
+      if (footerCountEl) footerCountEl.textContent = count;
+    }
+    
+    // Show notification with real subscriber data
+    function showNotification() {
+      const notification = document.getElementById('notification');
+      const locationEl = document.getElementById('notification-location');
+      const messageEl = document.getElementById('notification-message');
+      
+      if (recentSubscribers.length > 0) {
+        const subscriber = recentSubscribers[currentNotificationIndex];
+        const location = subscriber.location || 'somewhere awesome';
+        const timeAgo = getTimeAgo(subscriber.timestamp);
+        
+        locationEl.textContent = `Someone from ${location}`;
+        messageEl.textContent = `joined the waitlist ${timeAgo}! 🎉`;
+        
+        // Cycle through subscribers
+        currentNotificationIndex = (currentNotificationIndex + 1) % recentSubscribers.length;
+      }
+      
+      notification.classList.remove('hidden');
+      
+      // Auto-hide after 5 seconds
+      setTimeout(() => {
+        hideNotification();
+      }, 5000);
+    }
+    
+    // Get human-readable time ago
+    function getTimeAgo(timestamp) {
+      if (!timestamp) return 'recently';
+      
+      const now = new Date();
+      const then = new Date(timestamp);
+      const diffMs = now - then;
+      const diffMins = Math.floor(diffMs / 60000);
+      const diffHours = Math.floor(diffMs / 3600000);
+      const diffDays = Math.floor(diffMs / 86400000);
+      
+      if (diffMins < 1) return 'just now';
+      if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
+      if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+      if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+      return 'recently';
+    }
     
     function hideNotification() {
       document.getElementById('notification').classList.add('hidden');
     }
     
-    // Update counts on page load from localStorage
-    document.addEventListener('DOMContentLoaded', function() {
-      updateWaitlistCount();
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', async function() {
+      // Fetch real subscriber data
+      await fetchRecentSubscribers();
+      
+      // Show first notification after 5 seconds
+      setTimeout(() => {
+        showNotification();
+      }, 5000);
+      
+      // Show notifications periodically (every 30 seconds)
+      setInterval(() => {
+        showNotification();
+      }, 30000);
     });
   </script>
 </body>
