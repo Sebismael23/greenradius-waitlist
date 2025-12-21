@@ -92,7 +92,7 @@
           <a href="#" class="flex items-center space-x-2">
             <img src="images/green-logo.png" alt="GreenRadius Logo" width="28" height="28" class="object-contain">
             <span class="font-bold text-xl bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">
-              GreenRadius
+              GreenRadiusismo
             </span>
           </a>
           <div class="hidden md:flex ml-10 space-x-8">
@@ -630,10 +630,10 @@
   </div>
 
   <!-- Waitlist Modal -->
-  <div id="waitlist-modal" class="fixed inset-0 bg-black/40 z-50 flex items-center justify-center hidden">
-    <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-lg w-full relative">
+  <div id="waitlist-modal" class="fixed inset-0 bg-black/40 z-50 flex items-center justify-center hidden overflow-y-auto p-4">
+    <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-lg w-full relative my-8">
       <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl">×</button>
-      <h2 class="text-2xl font-bold mb-4 text-center">Join the Waitlist</h2>
+      <h2 id="modal-title" class="text-2xl font-bold mb-4 text-center">Join the Waitlist</h2>
       <form id="modal-waitlist-form" class="space-y-4">
         <div class="flex gap-4">
           <input type="text" name="first_name" id="modal-first-name" placeholder="First Name" required class="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500">
@@ -668,10 +668,15 @@
     function openWaitlistModal(email = '') {
       waitlistModal.classList.remove('hidden');
       document.body.classList.add('overflow-hidden');
+      // Reset modal title in case it was changed from previous submission
+      document.getElementById('modal-title').textContent = 'Join the Waitlist';
+      // Ensure form is visible (in case it was hidden from previous submission)
+      modalForm.classList.remove('hidden');
+      modalFormMessage.classList.add('hidden');
+      modalFormMessage.innerHTML = '';
+      modalForm.reset();
       if (email) {
         modalEmail.value = email;
-      } else {
-        modalEmail.value = '';
       }
     }
 
@@ -735,9 +740,11 @@
         });
         const data = await response.json();
         if (data.success) {
+          // Update modal title to success state
+          document.getElementById('modal-title').textContent = "You're In! 🎉";
           modalForm.classList.add('hidden');
           modalFormMessage.classList.remove('hidden');
-          modalFormMessage.innerHTML = `<div class="text-center py-4"><div class="text-4xl mb-2">🎉</div><p class="text-lg font-semibold">You're on the waitlist!</p><p class="text-sm opacity-75">We'll notify you when GreenRadius launches in your area.</p></div>`;
+          modalFormMessage.innerHTML = `<div class="text-center py-4"><div class="text-4xl mb-2">✅</div><p class="text-lg font-semibold text-emerald-600">You've joined the waitlist!</p><p class="text-sm text-gray-600 mt-2">We'll notify you when GreenRadius launches in your area. Check your inbox for a confirmation email.</p></div>`;
           // Also update notification message immediately
           document.getElementById('notification-message').textContent = 'joined the waitlist! 🎉';
           fetchRecentSubscribers();
@@ -798,7 +805,7 @@
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ email })
+          body: JSON.stringify({ email_address: email })
         });
         
         const data = await response.json();
@@ -915,6 +922,10 @@
 
         // Cycle through subscribers
         currentNotificationIndex = (currentNotificationIndex + 1) % recentSubscribers.length;
+      } else {
+        // Fallback when no subscriber data available
+        locationEl.textContent = 'Someone';
+        messageEl.textContent = 'joined the waitlist recently! 🎉';
       }
 
       notification.classList.remove('hidden');
