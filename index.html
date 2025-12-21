@@ -8,6 +8,12 @@
 
   <!-- Meta Pixel Code -->
   <script>
+      // Meta Pixel event tracking helper
+      function trackEvent(event, params = {}) {
+        if (typeof fbq === 'function') {
+          fbq('track', event, params);
+        }
+      }
   !function(f,b,e,v,n,t,s)
   {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
   n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -756,6 +762,11 @@
           modalForm.classList.add('hidden');
           modalFormMessage.classList.remove('hidden');
           modalFormMessage.innerHTML = `<div class="text-center py-4"><div class="text-4xl mb-2">✅</div><p class="text-lg font-semibold text-emerald-600">You've joined the waitlist!</p><p class="text-sm text-gray-600 mt-2">We'll notify you when GreenRadius launches in your area. Check your inbox for a confirmation email.</p></div>`;
+          // Fire Meta Pixel Lead event
+          trackEvent('Lead', {
+            content_name: 'Waitlist Signup',
+            content_category: 'signup',
+          });
           // Also update notification message immediately
           document.getElementById('notification-message').textContent = 'joined the waitlist! 🎉';
           fetchRecentSubscribers();
