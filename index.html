@@ -92,7 +92,7 @@
           <a href="#" class="flex items-center space-x-2">
             <img src="images/green-logo.png" alt="GreenRadius Logo" width="28" height="28" class="object-contain">
             <span class="font-bold text-xl bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">
-              GreenRadiusismo
+              GreenRadius
             </span>
           </a>
           <div class="hidden md:flex ml-10 space-x-8">
@@ -171,7 +171,7 @@
                 required
                 class="flex-1 px-6 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
               >
-              <button type="button" class="bg-emerald-600 text-white px-8 py-3 rounded-full hover:bg-emerald-700 transition hover:scale-105 font-semibold whitespace-nowrap join-waitlist-btn" data-email-input="email-input">
+              <button type="submit" class="bg-emerald-600 text-white px-8 py-3 rounded-full hover:bg-emerald-700 transition hover:scale-105 font-semibold whitespace-nowrap">
                 Join Waitlist 🚀
               </button>
             </div>
@@ -179,15 +179,15 @@
           </form>
           
           <!-- Success State (hidden by default) -->
-          <div id="success-state" class="hidden text-center py-4">
+          <div id="success-state" class="hidden text-center py-6">
             <div class="success-checkmark inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-full mb-4">
               <span class="text-3xl">✅</span>
             </div>
-            <h3 class="text-xl font-bold text-emerald-600 mb-2">You're on the list!</h3>
-            <p class="text-gray-600">We'll notify you when GreenRadius launches in your area.</p>
+            <h3 class="text-xl font-bold text-emerald-600 mb-2">You've joined the waitlist!</h3>
+            <p class="text-gray-600">You'll be one of the first people notified when GreenRadius launches in your area. Check your inbox for a confirmation email.</p>
           </div>
           
-          <div class="flex items-center justify-center gap-4 mt-4 text-sm text-gray-600">
+          <div id="trust-badges" class="flex items-center justify-center gap-4 mt-4 text-sm text-gray-600">
             <span>✓ Free to join</span>
             <span>✓ No spam, ever</span>
             <span>✓ Early access perks</span>
@@ -808,13 +808,16 @@
           if (formId === 'waitlist-form') {
             form.classList.add('hidden');
             document.getElementById('success-state').classList.remove('hidden');
+            // Hide the trust badges since they're no longer relevant
+            const trustBadges = document.getElementById('trust-badges');
+            if (trustBadges) trustBadges.classList.add('hidden');
           } else {
             // For footer form, show inline success
             form.innerHTML = `
               <div class="text-center py-4">
                 <div class="text-4xl mb-2">🎉</div>
-                <p class="text-lg font-semibold">You're on the list!</p>
-                <p class="text-sm opacity-75">${data.message}</p>
+                <p class="text-lg font-semibold">You've joined the waitlist!</p>
+                <p class="text-sm opacity-75">${data.message || "We'll notify you when GreenRadius launches in your area."}</p>
               </div>
             `;
           }
@@ -960,27 +963,5 @@
       }, 60000);
     });
   </script>
-      try {
-        const response = await fetch('/api/subscribe', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formData)
-        });
-        const data = await response.json();
-        if (data.success) {
-          modalForm.classList.add('hidden');
-          modalFormMessage.classList.remove('hidden');
-          // Always show clear feedback
-          modalFormMessage.innerHTML = `<div class="text-center py-4"><div class="text-4xl mb-2">🎉</div><p class="text-lg font-semibold">You're on the waitlist!</p><p class="text-sm opacity-75">We'll notify you when GreenRadius launches in your area.</p></div>`;
-          fetchRecentSubscribers();
-        } else {
-          throw new Error(data.error || 'Subscription failed');
-        }
-      } catch (error) {
-        modalFormMessage.classList.remove('hidden');
-        modalFormMessage.innerHTML = `<p class="text-red-500 text-sm mt-2">Something went wrong. Please try again.</p>`;
-        submitBtn.innerHTML = originalText;
-        submitBtn.disabled = false;
-      }
+</body>
+</html>
