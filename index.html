@@ -161,22 +161,19 @@
         
         <!-- Waitlist Form -->
         <div id="waitlist" class="max-w-md mx-auto mb-6">
-          <form id="waitlist-form" class="space-y-3">
+          <div class="space-y-3">
             <div class="flex flex-col sm:flex-row gap-3">
               <input 
                 type="email" 
-                name="email_address"
                 id="email-input"
                 placeholder="📧 Enter your email" 
-                required
                 class="flex-1 px-6 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
               >
-              <button type="submit" class="bg-emerald-600 text-white px-8 py-3 rounded-full hover:bg-emerald-700 transition hover:scale-105 font-semibold whitespace-nowrap">
+              <button type="button" class="bg-emerald-600 text-white px-8 py-3 rounded-full hover:bg-emerald-700 transition hover:scale-105 font-semibold whitespace-nowrap join-waitlist-btn" data-email-input="email-input">
                 Join Waitlist 🚀
               </button>
             </div>
-            <div id="form-message" class="hidden"></div>
-          </form>
+          </div>
           
           <!-- Success State (hidden by default) -->
           <div id="success-state" class="hidden text-center py-6">
@@ -557,7 +554,6 @@
             name="email_address"
             id="footer-email-input"
             placeholder="📧 Enter your email" 
-            required
             class="flex-1 px-6 py-4 rounded-full text-gray-900 focus:outline-none focus:ring-2 focus:ring-white"
           >
           <button type="button" class="bg-white text-emerald-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition hover:scale-105 shadow-xl whitespace-nowrap join-waitlist-btn" data-email-input="footer-email-input">
@@ -565,11 +561,8 @@
           </button>
         </div>
       </form>
-          </button>
-        </div>
-      </form>
       
-      <p class="mt-6 text-sm opacity-75">
+      <p class="mt-6 text-sm opacity-75 text-center">
         No spam, ever • Unsubscribe anytime • Early access guaranteed
       </p>
     </div>
@@ -788,75 +781,6 @@
         icon.textContent = '+';
       }
     }
-    
-    // Mailchimp subscription via Netlify function
-    async function submitToMailchimp(form, formId) {
-      const email = form.querySelector('input[name="email_address"]').value;
-      
-      // Show loading state
-      const submitBtn = form.querySelector('button[type="submit"]');
-      const originalText = submitBtn.innerHTML;
-      submitBtn.innerHTML = '<span class="animate-pulse">Joining...</span>';
-      submitBtn.disabled = true;
-      
-      try {
-        const response = await fetch('/api/subscribe', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ email_address: email })
-        });
-        
-        const data = await response.json();
-        
-        if (data.success) {
-          // Success!
-          if (formId === 'waitlist-form') {
-            form.classList.add('hidden');
-            document.getElementById('success-state').classList.remove('hidden');
-            // Hide the trust badges since they're no longer relevant
-            const trustBadges = document.getElementById('trust-badges');
-            if (trustBadges) trustBadges.classList.add('hidden');
-          } else {
-            // For footer form, show inline success
-            form.innerHTML = `
-              <div class="text-center py-4">
-                <div class="text-4xl mb-2">🎉</div>
-                <p class="text-lg font-semibold">You've joined the waitlist!</p>
-                <p class="text-sm opacity-75">${data.message || "We'll notify you when GreenRadius launches in your area."}</p>
-              </div>
-            `;
-          }
-          
-          // Refresh subscriber data
-          fetchRecentSubscribers();
-          
-        } else {
-          throw new Error(data.error || 'Subscription failed');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        // Show error message
-        const messageEl = document.getElementById('form-message');
-        if (messageEl) {
-          messageEl.classList.remove('hidden');
-          messageEl.innerHTML = `<p class="text-red-500 text-sm mt-2">Something went wrong. Please try again.</p>`;
-        }
-        submitBtn.innerHTML = originalText;
-        submitBtn.disabled = false;
-      }
-    }
-    
-    // Waitlist form handling
-    function handleWaitlistSubmit(e, formId) {
-      e.preventDefault();
-      const form = document.getElementById(formId);
-      submitToMailchimp(form, formId);
-    }
-    
-    document.getElementById('waitlist-form').addEventListener('submit', (e) => handleWaitlistSubmit(e, 'waitlist-form'));
-    document.getElementById('footer-waitlist-form').addEventListener('submit', (e) => handleWaitlistSubmit(e, 'footer-waitlist-form'));
     
     // Store for recent subscribers
     let recentSubscribers = [];
