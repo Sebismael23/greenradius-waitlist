@@ -1,0 +1,15 @@
+<!-- Notification Popup Component -->
+<div id="notification" class="hidden fixed bottom-4 left-4 bg-white rounded-xl shadow-2xl p-4 max-w-sm animate-slide-in z-50">
+  <div class="flex items-start gap-3">
+    <div class="text-2xl">🎉</div>
+    <div class="flex-1">
+      <p class="font-semibold text-gray-900">
+        <span id="notification-location">Someone</span>
+      </p>
+      <p class="text-sm text-gray-600" id="notification-message">joined the waitlist recently!</p>
+    </div>
+    <button onclick="document.getElementById('notification').classList.add('hidden')" class="text-gray-400 hover:text-gray-600" aria-label="Close notification">
+      ✕
+    </button>
+  </div>
+</div>

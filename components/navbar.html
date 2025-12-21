@@ -1,0 +1,47 @@
+<!-- Navigation Component -->
+<nav class="fixed top-0 w-full bg-white/90 backdrop-blur-lg z-50 border-b border-gray-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+        <a href="index.html" class="flex items-center space-x-2">
+          <img src="images/green-logo.png" alt="GreenRadius Logo" width="28" height="28" class="object-contain">
+          <span class="font-bold text-xl bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">
+            GreenRadius
+          </span>
+        </a>
+        <div class="hidden md:flex ml-10 space-x-8">
+          <a href="features.html" class="nav-link text-gray-700 hover:text-emerald-600 transition" data-page="features">Features</a>
+          <a href="index.html#how-it-works" class="text-gray-700 hover:text-emerald-600 transition">How it Works</a>
+          <a href="index.html#impact" class="text-gray-700 hover:text-emerald-600 transition">Impact</a>
+          <a href="about.html" class="nav-link text-gray-700 hover:text-emerald-600 transition" data-page="about">About</a>
+        </div>
+      </div>
+      <div class="hidden md:flex items-center space-x-4">
+        <span class="waitlist-badge text-white text-xs px-3 py-1 rounded-full font-semibold">
+          🚀 Coming Soon to Utah
+        </span>
+        <button type="button" class="bg-emerald-600 text-white px-6 py-2 rounded-full hover:bg-emerald-700 transition hover:scale-105 font-semibold join-waitlist-btn">
+          Join Waitlist →
+        </button>
+      </div>
+      <button id="mobile-menu-btn" class="md:hidden" aria-label="Toggle menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+    <div class="px-2 pt-2 pb-3 space-y-1">
+      <a href="features.html" class="nav-link block px-3 py-2 text-gray-700" data-page="features">Features</a>
+      <a href="index.html#how-it-works" class="block px-3 py-2 text-gray-700">How it Works</a>
+      <a href="index.html#impact" class="block px-3 py-2 text-gray-700">Impact</a>
+      <a href="about.html" class="nav-link block px-3 py-2 text-gray-700" data-page="about">About</a>
+      <button type="button" class="w-full bg-emerald-600 text-white px-3 py-2 rounded-lg font-semibold join-waitlist-btn">
+        Join Waitlist →
+      </button>
+    </div>
+  </div>
+</nav>

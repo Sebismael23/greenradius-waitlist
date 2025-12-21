@@ -1,0 +1,126 @@
+/**
+ * GreenRadius Shared Styles
+ * =========================
+ * Include this file on all pages for consistent styling.
+ */
+
+/* ==================== BASE ==================== */
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* ==================== ANIMATIONS ==================== */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes leaf-float {
+  0% { transform: translateX(-100px) translateY(0) rotate(0deg); }
+  25% { transform: translateX(100px) translateY(-50px) rotate(90deg); }
+  50% { transform: translateX(-50px) translateY(50px) rotate(180deg); }
+  75% { transform: translateX(50px) translateY(-30px) rotate(270deg); }
+  100% { transform: translateX(-100px) translateY(0) rotate(360deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.6); }
+}
+
+@keyframes scale-in {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+@keyframes progress-fill {
+  from { width: 0%; }
+  to { width: 75%; }
+}
+
+/* ==================== ANIMATION CLASSES ==================== */
+.animate-fade-in { animation: fade-in 0.8s ease-out; }
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-slide-in { animation: slide-in 0.5s ease-out; }
+.animate-slide-in-left { animation: slide-in-left 0.8s ease-out; }
+.animate-slide-in-right { animation: slide-in-right 0.8s ease-out; }
+.animate-leaf-float { animation: leaf-float 10s infinite linear; }
+.animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+.animate-progress-fill { animation: progress-fill 2s ease-out; }
+
+/* ==================== INTERACTIVE ELEMENTS ==================== */
+.hover-lift {
+  transition: all 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+/* ==================== SPECIAL ELEMENTS ==================== */
+.waitlist-badge {
+  background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.success-checkmark {
+  animation: scale-in 0.3s ease-out;
+}
+
+.timeline-line {
+  background: linear-gradient(to bottom, #10b981, #3b82f6);
+}
+
+/* ==================== ACTIVE NAV STATES ==================== */
+.nav-link.active {
+  color: #059669; /* emerald-600 */
+  font-weight: 500;
+}
+
+/* ==================== SCROLLBAR (optional) ==================== */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* ==================== FOCUS STATES ==================== */
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
+/* Better focus visibility for accessibility */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid #059669;
+  outline-offset: 2px;
+}

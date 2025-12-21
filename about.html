@@ -6,28 +6,17 @@
   <title>About - GreenRadius | Our Mission to Transform Communities</title>
   <meta name="description" content="Learn about GreenRadius - our mission, team, and vision to make sustainable living social and accessible for everyone.">
 
-  <!-- Meta Pixel Code -->
-  <script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '1869362300613991');
-  fbq('track', 'PageView');
-  </script>
-  <noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=1869362300613991&ev=PageView&noscript=1"
-  /></noscript>
-  <!-- End Meta Pixel Code -->
+  <!-- Meta Pixel -->
+  <script src="js/analytics.js"></script>
+  <noscript>
+    <img height="1" width="1" style="display:none" 
+         src="https://www.facebook.com/tr?id=1869362300613991&ev=PageView&noscript=1" alt=""/>
+  </noscript>
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="images/green-logo.png">
   
-  <!-- Tailwind CSS via CDN -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   
   <!-- Google Fonts -->
@@ -35,108 +24,30 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-    
-    @keyframes fade-in {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    
-    @keyframes pulse-glow {
-      0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
-      50% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.6); }
-    }
-    
-    .animate-fade-in { animation: fade-in 0.8s ease-out; }
-    .animate-float { animation: float 3s ease-in-out infinite; }
-    
-    .waitlist-badge {
-      background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
-      animation: pulse-glow 2s ease-in-out infinite;
-    }
-    
-    .hover-lift {
-      transition: all 0.3s ease;
-    }
-    .hover-lift:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-    }
-    
-    .timeline-line {
-      background: linear-gradient(to bottom, #10b981, #3b82f6);
-    }
-  </style>
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="bg-white text-gray-900">
-  <!-- Navigation -->
-  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-lg z-50 border-b border-gray-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16">
-        <div class="flex items-center">
-          <a href="index.html" class="flex items-center space-x-2">
-            <img src="images/green-logo.png" alt="GreenRadius Logo" width="28" height="28" class="object-contain">
-            <span class="font-bold text-xl bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">
-              GreenRadius
-            </span>
-          </a>
-          <div class="hidden md:flex ml-10 space-x-8">
-            <a href="features.html" class="text-gray-700 hover:text-emerald-600 transition">Features</a>
-            <a href="index.html#how-it-works" class="text-gray-700 hover:text-emerald-600 transition">How it Works</a>
-            <a href="index.html#impact" class="text-gray-700 hover:text-emerald-600 transition">Impact</a>
-            <a href="about.html" class="text-emerald-600 font-medium">About</a>
-          </div>
-        </div>
-        <div class="hidden md:flex items-center space-x-4">
-          <span class="waitlist-badge text-white text-xs px-3 py-1 rounded-full font-semibold">
-            🚀 Coming Soon to Utah
-          </span>
-          <button type="button" class="bg-emerald-600 text-white px-6 py-2 rounded-full hover:bg-emerald-700 transition hover:scale-105 font-semibold join-waitlist-btn">
-            Join Waitlist →
-          </button>
-        </div>
-        <button id="mobile-menu-btn" class="md:hidden">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-      </div>
-    </div>
-    
-    <!-- Mobile menu -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-      <div class="px-2 pt-2 pb-3 space-y-1">
-        <a href="features.html" class="block px-3 py-2 text-gray-700">Features</a>
-        <a href="index.html#how-it-works" class="block px-3 py-2 text-gray-700">How it Works</a>
-        <a href="index.html#impact" class="block px-3 py-2 text-gray-700">Impact</a>
-        <a href="about.html" class="block px-3 py-2 text-emerald-600 font-medium">About</a>
-        <button type="button" class="w-full bg-emerald-600 text-white px-3 py-2 rounded-lg font-semibold join-waitlist-btn">Join Waitlist →</button>
-      </div>
-    </div>
-  </nav>
+  
+  <!-- Navbar Component -->
+  <div data-component="navbar"></div>
 
   <!-- Hero Section -->
   <section class="pt-32 pb-20 relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-emerald-50 to-blue-50 opacity-50"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-emerald-50 via-blue-50 to-purple-50 opacity-50"></div>
     <div class="relative max-w-7xl mx-auto px-4 text-center animate-fade-in">
       <span class="inline-block px-4 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm font-semibold mb-6">
-        🌍 Our Story
+        🌱 Our Story
       </span>
       <h1 class="text-5xl md:text-6xl font-bold mb-6">
-        Building a
+        Making Sustainability
         <span class="block bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent mt-2">
-          Greener Future Together
+          Social & Accessible
         </span>
       </h1>
       <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-        We believe that small actions, multiplied by millions, can transform our planet. 
-        GreenRadius is our answer to making sustainability accessible, engaging, and community-driven.
+        We believe the climate crisis can only be solved when communities come together. 
+        GreenRadius is the tool to make that happen, one neighborhood at a time.
       </p>
     </div>
   </section>
@@ -146,136 +57,73 @@
     <div class="max-w-7xl mx-auto px-4">
       <div class="grid lg:grid-cols-2 gap-16 items-center">
         <div>
-          <span class="text-emerald-600 font-semibold text-sm uppercase tracking-wider">Our Mission</span>
-          <h2 class="text-4xl font-bold mt-4 mb-6">
-            Making Sustainable Living 
-            <span class="bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">Social & Fun</span>
-          </h2>
+          <h2 class="text-4xl font-bold mb-6">Our Mission</h2>
           <p class="text-lg text-gray-600 mb-6">
-            The climate crisis can feel overwhelming. We're often told that individual actions don't matter, 
-            that the problem is too big for us to solve. We refuse to believe that.
+            GreenRadius exists to solve a simple problem: <strong>sustainable living is lonely.</strong>
           </p>
-          <p class="text-lg text-gray-600 mb-6">
-            GreenRadius is built on a simple truth: when people work together, incredible things happen. 
-            By turning sustainable actions into a shared experience, with neighbors, friends, and communities,
-            we can create a movement that scales.
+          <p class="text-gray-600 mb-6">
+            You might recycle diligently, bike to work, and reduce your water usage — but if you don't know if anyone else in your building or on your street is doing the same, it feels pointless.
           </p>
-          <p class="text-lg text-gray-600">
-            Our mission is to make every person feel empowered to make a difference, one challenge at a time.
+          <p class="text-gray-600 mb-6">
+            We're building a platform that makes sustainable living visible, social, and rewarding. When you see your neighbors taking action, when you compete together on leaderboards, when you share tools instead of everyone buying their own — suddenly, individual actions become collective impact.
           </p>
-        </div>
-        
-        <div class="relative">
-          <div class="bg-gradient-to-br from-emerald-100 to-blue-100 rounded-3xl p-8 text-center">
-            <div class="text-8xl mb-4 animate-float">🌱</div>
-            <p class="text-2xl font-bold text-gray-900">
-              "Small actions × Community = 
-              <span class="bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">Big Impact</span>"
+          <div class="bg-emerald-50 border-l-4 border-emerald-500 p-6 rounded-r-lg">
+            <p class="text-emerald-800 font-semibold italic">
+              "We don't need a handful of people doing sustainability perfectly. We need millions of people doing it imperfectly, together."
             </p>
           </div>
         </div>
+        <div class="space-y-6">
+          <div class="bg-white rounded-2xl shadow-lg p-6 hover-lift">
+            <div class="text-3xl mb-3">🎯</div>
+            <h3 class="text-xl font-bold mb-2">Make It Visible</h3>
+            <p class="text-gray-600">Turn invisible personal choices into visible community action</p>
+          </div>
+          <div class="bg-white rounded-2xl shadow-lg p-6 hover-lift">
+            <div class="text-3xl mb-3">🤝</div>
+            <h3 class="text-xl font-bold mb-2">Make It Social</h3>
+            <p class="text-gray-600">Replace isolation with community accountability and support</p>
+          </div>
+          <div class="bg-white rounded-2xl shadow-lg p-6 hover-lift">
+            <div class="text-3xl mb-3">🎁</div>
+            <h3 class="text-xl font-bold mb-2">Make It Rewarding</h3>
+            <p class="text-gray-600">Create real incentives through gamification and local business partnerships</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Values Section -->
+  <!-- The Problem Section -->
   <section class="py-20 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4">
       <div class="text-center mb-16">
-        <span class="text-emerald-600 font-semibold text-sm uppercase tracking-wider">What Drives Us</span>
-        <h2 class="text-4xl font-bold mt-4 mb-4">Our Core Values</h2>
+        <h2 class="text-4xl font-bold mb-4">The Problem We're Solving</h2>
         <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-          The principles that guide everything we build
+          Individual action isn't enough. Community action is the answer.
         </p>
       </div>
       
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <div class="bg-white rounded-2xl p-8 hover:shadow-xl transition-all duration-300 hover:scale-105">
-          <div class="w-16 h-16 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl flex items-center justify-center text-3xl text-white mb-6">
-            🤝
-          </div>
-          <h3 class="text-xl font-bold mb-3">Community First</h3>
-          <p class="text-gray-600">
-            Real change happens when neighbors work together. We design for community, not isolation.
-          </p>
-        </div>
-        
-        <div class="bg-white rounded-2xl p-8 hover:shadow-xl transition-all duration-300 hover:scale-105">
-          <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center text-3xl text-white mb-6">
-            📊
-          </div>
-          <h3 class="text-xl font-bold mb-3">Measurable Impact</h3>
-          <p class="text-gray-600">
-            Every action counts. We track and celebrate real environmental impact using verified data.
-          </p>
-        </div>
-        
-        <div class="bg-white rounded-2xl p-8 hover:shadow-xl transition-all duration-300 hover:scale-105">
-          <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center text-3xl text-white mb-6">
-            🎮
-          </div>
-          <h3 class="text-xl font-bold mb-3">Make It Fun</h3>
-          <p class="text-gray-600">
-            Sustainability shouldn't feel like a chore. Gamification makes going green genuinely enjoyable.
-          </p>
-        </div>
-        
-        <div class="bg-white rounded-2xl p-8 hover:shadow-xl transition-all duration-300 hover:scale-105">
-          <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center text-3xl text-white mb-6">
-            🌈
-          </div>
-          <h3 class="text-xl font-bold mb-3">Accessible to All</h3>
-          <p class="text-gray-600">
-            Everyone can participate, regardless of background or resources. Green shouldn't be elitist.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- The Problem We're Solving -->
-  <section class="py-20">
-    <div class="max-w-7xl mx-auto px-4">
-      <div class="text-center mb-16">
-        <span class="text-emerald-600 font-semibold text-sm uppercase tracking-wider">Why We Exist</span>
-        <h2 class="text-4xl font-bold mt-4 mb-4">The Problem We're Solving</h2>
-      </div>
-      
       <div class="grid md:grid-cols-3 gap-8">
-        <div class="text-center">
-          <div class="text-6xl mb-4">😔</div>
-          <h3 class="text-xl font-bold mb-3">Eco-Anxiety Is Real</h3>
+        <div class="bg-white rounded-2xl p-8 text-center shadow-lg">
+          <div class="text-5xl mb-4">😔</div>
+          <h3 class="text-xl font-bold mb-3 text-red-600">The Loneliness Problem</h3>
           <p class="text-gray-600">
-            75% of young people feel anxious about climate change but don't know how to help. 
-            The problem feels too big, too distant.
+            73% of people who try to live sustainably feel like they're doing it alone. Without community support, they give up.
           </p>
         </div>
-        
-        <div class="text-center">
-          <div class="text-6xl mb-4">🤷</div>
-          <h3 class="text-xl font-bold mb-3">Information Overload</h3>
+        <div class="bg-white rounded-2xl p-8 text-center shadow-lg">
+          <div class="text-5xl mb-4">🤷</div>
+          <h3 class="text-xl font-bold mb-3 text-orange-600">The Visibility Problem</h3>
           <p class="text-gray-600">
-            Conflicting advice makes sustainable living confusing. Is that bag recyclable? 
-            Should you buy local or organic? It's exhausting.
+            Your neighbors might be composting, biking, and reducing waste — but you'd never know. Good behavior is invisible.
           </p>
         </div>
-        
-        <div class="text-center">
-          <div class="text-6xl mb-4">😶</div>
-          <h3 class="text-xl font-bold mb-3">Acting Alone Is Hard</h3>
+        <div class="bg-white rounded-2xl p-8 text-center shadow-lg">
+          <div class="text-5xl mb-4">📉</div>
+          <h3 class="text-xl font-bold mb-3 text-purple-600">The Motivation Problem</h3>
           <p class="text-gray-600">
-            When you don't see others taking action, it's easy to feel like your efforts don't matter. 
-            Motivation fades without support.
-          </p>
-        </div>
-      </div>
-      
-      <div class="text-center mt-16">
-        <div class="inline-flex items-center gap-4 px-8 py-4 bg-emerald-50 rounded-2xl">
-          <span class="text-4xl">💡</span>
-          <p class="text-lg text-emerald-800 font-semibold text-left">
-            GreenRadius turns these challenges into opportunities by<br>
-            making sustainability <span class="underline">visible</span>, <span class="underline">social</span>, and <span class="underline">achievable</span>.
+            When you can't see the impact of your actions, it's hard to stay motivated. Abstract benefits don't drive behavior change.
           </p>
         </div>
       </div>
@@ -283,344 +131,116 @@
   </section>
 
   <!-- Our Approach Section -->
-  <section class="py-20 bg-gradient-to-br from-emerald-50 to-blue-50">
+  <section class="py-20">
     <div class="max-w-7xl mx-auto px-4">
       <div class="text-center mb-16">
-        <span class="text-emerald-600 font-semibold text-sm uppercase tracking-wider">Our Approach</span>
-        <h2 class="text-4xl font-bold mt-4 mb-4">How We Make It Happen</h2>
+        <h2 class="text-4xl font-bold mb-4">Our Approach</h2>
         <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-          A unique combination of technology, community, and behavioral science
+          We combine behavioral science, community design, and gamification
         </p>
       </div>
       
       <div class="grid md:grid-cols-2 gap-8">
-        <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
-          <div class="flex items-center gap-4 mb-6">
-            <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center text-2xl">🧠</div>
-            <h3 class="text-xl font-bold">Behavioral Science</h3>
-          </div>
-          <p class="text-gray-600 mb-4">
-            Our challenges are designed using proven behavioral psychology principles: habit stacking, 
-            social proof, and gamification. We make the sustainable choice the easy choice.
+        <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl p-8 text-white">
+          <h3 class="text-2xl font-bold mb-4">Hyperlocal Focus</h3>
+          <p class="opacity-90 mb-4">
+            We don't try to save the world. We focus on your specific neighborhood, building, or street. When you know the people you're competing with and collaborating with, you're more likely to act.
           </p>
-          <ul class="space-y-2 text-sm text-gray-600">
-            <li class="flex items-center gap-2"><span class="text-emerald-600">✓</span> Habit formation frameworks</li>
-            <li class="flex items-center gap-2"><span class="text-emerald-600">✓</span> Social reinforcement loops</li>
-            <li class="flex items-center gap-2"><span class="text-emerald-600">✓</span> Progress visibility systems</li>
-          </ul>
+          <div class="bg-white/20 rounded-lg p-4">
+            <p class="font-semibold">Research shows:</p>
+            <p class="text-sm">Peer influence is 2.5x more effective than financial incentives at driving sustainable behavior.</p>
+          </div>
         </div>
-        
-        <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
-          <div class="flex items-center gap-4 mb-6">
-            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-2xl">🗺️</div>
-            <h3 class="text-xl font-bold">Hyper-Local Focus</h3>
-          </div>
-          <p class="text-gray-600 mb-4">
-            Global problems need local solutions. GreenRadius focuses on your immediate neighborhood, 
-            connecting you with nearby resources, events, and people who share your values.
+        <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-8 text-white">
+          <h3 class="text-2xl font-bold mb-4">Gamification That Works</h3>
+          <p class="opacity-90 mb-4">
+            Points, badges, and leaderboards aren't gimmicks — they're proven tools for behavior change. We use them thoughtfully to make sustainable actions feel rewarding.
           </p>
-          <ul class="space-y-2 text-sm text-gray-600">
-            <li class="flex items-center gap-2"><span class="text-emerald-600">✓</span> Neighborhood-based communities</li>
-            <li class="flex items-center gap-2"><span class="text-emerald-600">✓</span> Local green business discovery</li>
-            <li class="flex items-center gap-2"><span class="text-emerald-600">✓</span> Area-specific challenges</li>
-          </ul>
-        </div>
-        
-        <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
-          <div class="flex items-center gap-4 mb-6">
-            <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-2xl">📈</div>
-            <h3 class="text-xl font-bold">Real Impact Tracking</h3>
+          <div class="bg-white/20 rounded-lg p-4">
+            <p class="font-semibold">Our approach:</p>
+            <p class="text-sm">Short feedback loops, social recognition, and tangible rewards from local businesses.</p>
           </div>
-          <p class="text-gray-600 mb-4">
-            We use EPA-verified formulas and real data to calculate your environmental impact. 
-            See exactly how much CO₂, water, and waste you've prevented, not estimates, real numbers.
-          </p>
-          <ul class="space-y-2 text-sm text-gray-600">
-            <li class="flex items-center gap-2"><span class="text-emerald-600">✓</span> EPA-verified calculations</li>
-            <li class="flex items-center gap-2"><span class="text-emerald-600">✓</span> Real-time dashboard updates</li>
-            <li class="flex items-center gap-2"><span class="text-emerald-600">✓</span> Community aggregate impact</li>
-          </ul>
-        </div>
-        
-        <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
-          <div class="flex items-center gap-4 mb-6">
-            <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center text-2xl">🤝</div>
-            <h3 class="text-xl font-bold">Sharing Economy</h3>
-          </div>
-          <p class="text-gray-600 mb-4">
-            The most sustainable product is one that already exists. Our built-in sharing economy 
-            helps neighbors share tools, equipment, and resources instead of everyone buying new.
-          </p>
-          <ul class="space-y-2 text-sm text-gray-600">
-            <li class="flex items-center gap-2"><span class="text-emerald-600">✓</span> Tool & equipment lending</li>
-            <li class="flex items-center gap-2"><span class="text-emerald-600">✓</span> Book & media sharing</li>
-            <li class="flex items-center gap-2"><span class="text-emerald-600">✓</span> Trust & rating systems</li>
-          </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Team Section (Simple Version) -->
+  <!-- Timeline / Roadmap -->
   <section class="py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4">
+    <div class="max-w-4xl mx-auto px-4">
       <div class="text-center mb-16">
-        <span class="text-emerald-600 font-semibold text-sm uppercase tracking-wider">Our Team</span>
-        <h2 class="text-4xl font-bold mt-4 mb-4">Built By Believers</h2>
-        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-          A passionate team committed to making environmental action accessible to everyone
-        </p>
+        <h2 class="text-4xl font-bold mb-4">Our Journey</h2>
+        <p class="text-xl text-gray-600">From idea to impact</p>
       </div>
       
-      <div class="bg-white rounded-2xl p-12 shadow-lg max-w-3xl mx-auto text-center">
-        <div class="text-6xl mb-6">👋</div>
-        <h3 class="text-2xl font-bold mb-4">We're Growing Our Team</h3>
-        <p class="text-gray-600 mb-6">
-          GreenRadius is currently being built by a small team of passionate environmentalists, 
-          designers, and engineers who believe technology can accelerate climate action.
-        </p>
-        <p class="text-gray-600 mb-8">
-          Interested in joining us? We're always looking for talented people who share our vision.
-        </p>
-        <a href="mailto:sebastienismael25@gmail.com?subject=GreenRadius%20-%20Getting%20in%20Touch">
-          <button class="bg-emerald-600 text-white px-8 py-3 rounded-full hover:bg-emerald-700 transition hover:scale-105 font-semibold">
-            Get in Touch →
-          </button>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Stats/Impact Vision -->
-  <section class="py-20">
-    <div class="max-w-7xl mx-auto px-4">
-      <div class="text-center mb-16">
-        <span class="text-emerald-600 font-semibold text-sm uppercase tracking-wider">Our Vision</span>
-        <h2 class="text-4xl font-bold mt-4 mb-4">The Impact We're Building Toward</h2>
-      </div>
-      
-      <div class="grid md:grid-cols-4 gap-8">
-        <div class="text-center">
-          <div class="text-5xl font-bold bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent mb-2">1M+</div>
-          <p class="text-gray-600">Active Users</p>
-          <p class="text-sm text-gray-500 mt-1">by 2027</p>
-        </div>
+      <div class="relative">
+        <!-- Timeline line (hidden on mobile) -->
+        <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 timeline-line hidden md:block"></div>
         
-        <div class="text-center">
-          <div class="text-5xl font-bold bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent mb-2">10K+</div>
-          <p class="text-gray-600">Neighborhoods</p>
-          <p class="text-sm text-gray-500 mt-1">connected globally</p>
-        </div>
-        
-        <div class="text-center">
-          <div class="text-5xl font-bold bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent mb-2">1M</div>
-          <p class="text-gray-600">Tons CO₂ Saved</p>
-          <p class="text-sm text-gray-500 mt-1">tracked & verified</p>
-        </div>
-        
-        <div class="text-center">
-          <div class="text-5xl font-bold bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent mb-2">∞</div>
-          <p class="text-gray-600">Possibilities</p>
-          <p class="text-sm text-gray-500 mt-1">when we work together</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section class="py-20 bg-gradient-to-r from-emerald-600 to-blue-600 text-white">
-    <div class="max-w-4xl mx-auto px-4 text-center">
-      <h2 class="text-4xl md:text-5xl font-bold mb-6">
-        Join Us in Building a Greener World
-      </h2>
-      <p class="text-xl mb-8 opacity-90">
-        Be among the first to experience GreenRadius and help shape the future of community sustainability
-      </p>
-      <div class="max-w-md mx-auto">
-        <div class="flex flex-col sm:flex-row gap-3">
-          <input 
-            type="email" 
-            id="about-email-input"
-            placeholder="📧 Enter your email" 
-            class="flex-1 px-6 py-4 rounded-full text-gray-900 focus:outline-none focus:ring-2 focus:ring-white"
-          >
-          <button type="button" class="bg-white text-emerald-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition hover:scale-105 whitespace-nowrap join-waitlist-btn" data-email-input="about-email-input">
-            Join the Waitlist →
-          </button>
-        </div>
-      </div>
-      <p class="mt-6 text-sm opacity-75 text-center">
-        • No spam • Early access guaranteed
-      </p>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-white py-16">
-    <div class="max-w-7xl mx-auto px-4">
-      <div class="grid md:grid-cols-4 gap-8 mb-8">
-        <div class="md:col-span-2">
-          <div class="flex items-center space-x-2 mb-4">
-            <img src="images/green-logo.png" alt="GreenRadius Logo" width="28" height="28" class="object-contain">
-            <span class="font-bold text-xl">GreenRadius</span>
+        <div class="space-y-12">
+          <div class="flex flex-col md:flex-row items-center gap-8">
+            <div class="w-full md:w-1/2 md:text-right">
+              <div class="bg-white rounded-xl p-6 shadow-lg">
+                <span class="text-emerald-600 font-semibold">Early 2024</span>
+                <h3 class="text-xl font-bold mt-2">Launch First Pilot</h3>
+                <p class="text-gray-600 mt-2">Partner with select apartment communities in Salt Lake City</p>
+              </div>
+            </div>
+            <div class="w-8 h-8 bg-emerald-500 rounded-full border-4 border-white shadow-lg z-10 hidden md:block"></div>
+            <div class="w-full md:w-1/2"></div>
           </div>
-          <p class="text-gray-400 mb-4">Making sustainable living social. Coming 2026.</p>
-          <div class="flex gap-4">
-            <a href="#" class="text-gray-400 hover:text-white transition">📧</a>
-            <a href="#" class="text-gray-400 hover:text-white transition">🐦</a>
-            <a href="#" class="text-gray-400 hover:text-white transition">📷</a>
-            <a href="#" class="text-gray-400 hover:text-white transition">💼</a>
+          
+          <div class="flex flex-col md:flex-row items-center gap-8">
+            <div class="w-full md:w-1/2"></div>
+            <div class="w-8 h-8 bg-blue-500 rounded-full border-4 border-white shadow-lg z-10 hidden md:block"></div>
+            <div class="w-full md:w-1/2">
+              <div class="bg-white rounded-xl p-6 shadow-lg">
+                <span class="text-blue-600 font-semibold">Mid 2024</span>
+                <h3 class="text-xl font-bold mt-2">Expand to 10 Neighborhoods</h3>
+                <p class="text-gray-600 mt-2">Refine the product based on pilot feedback, add business partners</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex flex-col md:flex-row items-center gap-8">
+            <div class="w-full md:w-1/2 md:text-right">
+              <div class="bg-white rounded-xl p-6 shadow-lg">
+                <span class="text-purple-600 font-semibold">Late 2024</span>
+                <h3 class="text-xl font-bold mt-2">Public Launch in Utah</h3>
+                <p class="text-gray-600 mt-2">Open to all Utah residents, launch mobile apps</p>
+              </div>
+            </div>
+            <div class="w-8 h-8 bg-purple-500 rounded-full border-4 border-white shadow-lg z-10 hidden md:block"></div>
+            <div class="w-full md:w-1/2"></div>
+          </div>
+          
+          <div class="flex flex-col md:flex-row items-center gap-8">
+            <div class="w-full md:w-1/2"></div>
+            <div class="w-8 h-8 bg-orange-500 rounded-full border-4 border-white shadow-lg z-10 hidden md:block"></div>
+            <div class="w-full md:w-1/2">
+              <div class="bg-white rounded-xl p-6 shadow-lg">
+                <span class="text-orange-600 font-semibold">2025</span>
+                <h3 class="text-xl font-bold mt-2">Expand Nationally</h3>
+                <p class="text-gray-600 mt-2">Bring GreenRadius to cities across the US</p>
+              </div>
+            </div>
           </div>
         </div>
-        
-        <div>
-          <h4 class="font-semibold mb-4">Product</h4>
-          <ul class="space-y-2 text-gray-400">
-            <li><a href="features.html" class="hover:text-white transition">Features</a></li>
-            <li><a href="index.html#faq" class="hover:text-white transition">FAQ</a></li>
-          </ul>
-        </div>
-        
-        <div>
-          <h4 class="font-semibold mb-4">Company</h4>
-          <ul class="space-y-2 text-gray-400">
-            <li><a href="about.html" class="hover:text-white transition">About</a></li>
-          </ul>
-        </div>
-      </div>
-      
-      <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
-        <p>© 2025 GreenRadius. Made with 💚 for our planet.</p>
       </div>
     </div>
-  </footer>
+  </section>
 
-  <!-- Waitlist Modal -->
-  <div id="waitlist-modal" class="fixed inset-0 bg-black/40 z-50 flex items-center justify-center hidden overflow-y-auto p-4">
-    <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-lg w-full relative my-8">
-      <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl">×</button>
-      <h2 id="modal-title" class="text-2xl font-bold mb-4 text-center">Join the Waitlist</h2>
-      <form id="modal-waitlist-form" class="space-y-4">
-        <div class="flex gap-4">
-          <input type="text" name="first_name" id="modal-first-name" placeholder="First Name" class="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500">
-          <input type="text" name="last_name" id="modal-last-name" placeholder="Last Name" class="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500">
-        </div>
-        <input type="email" name="email_address" id="modal-email" placeholder="Email *" required class="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500">
-        <div class="flex gap-4">
-          <input type="text" name="city" id="modal-city" placeholder="City" class="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500">
-          <input type="text" name="state" id="modal-state" placeholder="State" class="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500">
-        </div>
-        <input type="text" name="company" id="modal-company" placeholder="Company (optional)" class="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500">
-        <textarea name="comment" id="modal-comment" placeholder="What are you excited about, want, or any concerns?" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-emerald-500"></textarea>
-        <button type="submit" class="w-full bg-emerald-600 text-white py-3 rounded-full font-semibold hover:bg-emerald-700 transition hover:scale-105">Submit</button>
-        <div id="modal-form-message" class="hidden"></div>
-      </form>
-    </div>
-  </div>
+  <!-- CTA Component -->
+  <div data-component="cta-section"></div>
 
-  <script>
-    // Mobile menu toggle
-    document.getElementById('mobile-menu-btn').addEventListener('click', function() {
-      document.getElementById('mobile-menu').classList.toggle('hidden');
-    });
+  <!-- Footer Component -->
+  <div data-component="footer"></div>
 
-    // Modal logic
-    const waitlistModal = document.getElementById('waitlist-modal');
-    const closeModalBtn = document.getElementById('close-modal-btn');
-    const modalForm = document.getElementById('modal-waitlist-form');
-    const modalEmail = document.getElementById('modal-email');
-    const modalFormMessage = document.getElementById('modal-form-message');
+  <!-- Waitlist Modal Component (for nav button) -->
+  <div data-component="waitlist-modal"></div>
 
-    function openWaitlistModal(email = '') {
-      waitlistModal.classList.remove('hidden');
-      document.body.classList.add('overflow-hidden');
-      // Reset modal title in case it was changed from previous submission
-      document.getElementById('modal-title').textContent = 'Join the Waitlist';
-      // Ensure form is visible (in case it was hidden from previous submission)
-      modalForm.classList.remove('hidden');
-      modalFormMessage.classList.add('hidden');
-      modalFormMessage.innerHTML = '';
-      modalForm.reset();
-      if (email) {
-        modalEmail.value = email;
-      }
-    }
-
-    function closeWaitlistModal() {
-      waitlistModal.classList.add('hidden');
-      document.body.classList.remove('overflow-hidden');
-      modalForm.reset();
-      modalFormMessage.classList.add('hidden');
-      modalFormMessage.innerHTML = '';
-    }
-
-    closeModalBtn.addEventListener('click', closeWaitlistModal);
-    waitlistModal.addEventListener('click', function(e) {
-      if (e.target === waitlistModal) closeWaitlistModal();
-    });
-
-    // Attach modal open to all join buttons (event delegation) after DOM is ready
-    document.addEventListener('DOMContentLoaded', function() {
-      document.body.addEventListener('click', function(e) {
-        const btn = e.target.closest('.join-waitlist-btn');
-        if (btn) {
-          e.preventDefault();
-          // Check if button has data-email-input attribute
-          const emailInputId = btn.getAttribute('data-email-input');
-          let email = '';
-          if (emailInputId) {
-            const input = document.getElementById(emailInputId);
-            if (input) email = input.value;
-          }
-          openWaitlistModal(email);
-        }
-      });
-    });
-
-    // Modal form submission
-    modalForm.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const submitBtn = modalForm.querySelector('button[type="submit"]');
-      const originalText = submitBtn.innerHTML;
-      submitBtn.innerHTML = '<span class="animate-pulse">Joining...</span>';
-      submitBtn.disabled = true;
-
-      // Gather form data
-      const formData = {
-        first_name: document.getElementById('modal-first-name').value,
-        last_name: document.getElementById('modal-last-name').value,
-        email_address: document.getElementById('modal-email').value,
-        city: document.getElementById('modal-city').value,
-        state: document.getElementById('modal-state').value,
-        company: document.getElementById('modal-company').value,
-        comment: document.getElementById('modal-comment').value
-      };
-
-      try {
-        const response = await fetch('/api/subscribe', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formData)
-        });
-        const data = await response.json();
-        if (data.success) {
-          // Update modal title to success state
-          document.getElementById('modal-title').textContent = "You're In! 🎉";
-          modalForm.classList.add('hidden');
-          modalFormMessage.classList.remove('hidden');
-          modalFormMessage.innerHTML = `<div class="text-center py-4"><div class="text-4xl mb-2">✅</div><p class="text-lg font-semibold text-emerald-600">You've joined the waitlist!</p><p class="text-sm text-gray-600 mt-2">We'll notify you when GreenRadius launches in your area. Check your inbox for a confirmation email.</p></div>`;
-        } else {
-          throw new Error(data.error || 'Subscription failed');
-        }
-      } catch (error) {
-        modalFormMessage.classList.remove('hidden');
-        modalFormMessage.innerHTML = `<p class="text-red-500 text-sm mt-2">Something went wrong. Please try again.</p>`;
-        submitBtn.innerHTML = originalText;
-        submitBtn.disabled = false;
-      }
-    });
-  </script>
+  <!-- Scripts -->
+  <script src="js/components.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
