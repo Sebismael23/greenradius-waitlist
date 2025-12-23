@@ -1,209 +1,124 @@
 /**
  * GreenRadius Analytics & Meta Pixel
  * ===================================
- * This file handles all tracking functionality.
- * Include this file in the <head> of every page.
+ * Include this file in <head> of all pages.
  */
 
-// ===========================================
-// META PIXEL CONFIGURATION
-// ===========================================
-const META_PIXEL_ID = '1869362300613991';
-
-// Debug mode - set to true to see console logs
+// Debug mode - set to false for production
 const ANALYTICS_DEBUG = true;
 
-// ===========================================
-// META PIXEL INITIALIZATION
-// ===========================================
-(function() {
-  // Check if pixel already loaded
-  if (window.fbq) {
-    if (ANALYTICS_DEBUG) console.log('[Analytics] Pixel already loaded');
-    return;
-  }
+// Meta Pixel ID
+const META_PIXEL_ID = '1869362300613991';
 
-  // Create fbq function
-  var n = window.fbq = function() {
-    n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
-  };
-  
-  if (!window._fbq) window._fbq = n;
-  n.push = n;
-  n.loaded = true;
-  n.version = '2.0';
-  n.queue = [];
+// Initialize Meta Pixel
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
 
-  // Load the Facebook pixel script
-  var t = document.createElement('script');
-  t.async = true;
-  t.src = 'https://connect.facebook.net/en_US/fbevents.js';
-  
-  var s = document.getElementsByTagName('script')[0];
-  s.parentNode.insertBefore(t, s);
-
-  if (ANALYTICS_DEBUG) console.log('[Analytics] Meta Pixel script loading...');
-})();
-
-// Initialize pixel with your ID
 fbq('init', META_PIXEL_ID);
-if (ANALYTICS_DEBUG) console.log('[Analytics] Pixel initialized with ID:', META_PIXEL_ID);
-
-// Track page view
 fbq('track', 'PageView');
-if (ANALYTICS_DEBUG) console.log('[Analytics] PageView tracked');
 
-// ===========================================
-// TRACKING HELPER FUNCTIONS
-// ===========================================
+if (ANALYTICS_DEBUG) {
+  console.log('[Analytics] Meta Pixel initialized:', META_PIXEL_ID);
+  console.log('[Analytics] PageView tracked');
+}
 
 /**
- * Track a Meta Pixel event
- * @param {string} eventName - The event name (e.g., 'Lead', 'CompleteRegistration')
- * @param {object} params - Optional parameters for the event
+ * Track a custom event
+ * @param {string} eventName - Event name (e.g., 'Lead', 'CompleteRegistration')
+ * @param {object} params - Optional parameters
  */
 function trackEvent(eventName, params = {}) {
   if (typeof fbq === 'function') {
     fbq('track', eventName, params);
     if (ANALYTICS_DEBUG) {
-      console.log('[Analytics] Event tracked:', eventName, params);
+      console.log(`[Analytics] Event tracked: ${eventName}`, params);
     }
-    return true;
   } else {
-    if (ANALYTICS_DEBUG) {
-      console.warn('[Analytics] fbq not available. Event not tracked:', eventName);
-    }
-    return false;
+    console.warn('[Analytics] fbq not available');
   }
 }
 
 /**
- * Track a custom event (for custom conversions)
- * @param {string} eventName - Custom event name
- * @param {object} params - Optional parameters
- */
-function trackCustomEvent(eventName, params = {}) {
-  if (typeof fbq === 'function') {
-    fbq('trackCustom', eventName, params);
-    if (ANALYTICS_DEBUG) {
-      console.log('[Analytics] Custom event tracked:', eventName, params);
-    }
-    return true;
-  }
-  return false;
-}
-
-/**
- * Track a Lead event (for waitlist signups)
- * @param {string} source - Where the signup came from (e.g., 'hero', 'footer', 'modal')
+ * Track a Lead event (waitlist signup)
+ * @param {string} source - Where the lead came from
  */
 function trackLead(source = 'unknown') {
-  return trackEvent('Lead', {
+  trackEvent('Lead', { 
     content_name: 'Waitlist Signup',
-    content_category: 'signup',
+    content_category: 'Signup',
     source: source
   });
 }
 
 /**
+ * Track a custom event
+ * @param {string} eventName - Custom event name
+ * @param {object} params - Event parameters
+ */
+function trackCustomEvent(eventName, params = {}) {
+  if (typeof fbq === 'function') {
+    fbq('trackCustom', eventName, params);
+    if (ANALYTICS_DEBUG) {
+      console.log(`[Analytics] Custom event: ${eventName}`, params);
+    }
+  }
+}
+
+/**
  * Track button clicks
- * @param {string} buttonName - Name of the button clicked
+ * @param {string} buttonName - Name/ID of button
  */
 function trackButtonClick(buttonName) {
-  return trackCustomEvent('ButtonClick', {
-    button_name: buttonName
-  });
+  trackCustomEvent('ButtonClick', { button: buttonName });
 }
 
 /**
- * Track page scroll depth
- * @param {number} percentage - Scroll depth percentage (25, 50, 75, 100)
- */
-function trackScrollDepth(percentage) {
-  return trackCustomEvent('ScrollDepth', {
-    depth: percentage
-  });
-}
-
-// ===========================================
-// AUTOMATIC SCROLL TRACKING
-// ===========================================
-(function() {
-  var scrollMarkers = [25, 50, 75, 100];
-  var trackedMarkers = [];
-
-  function checkScroll() {
-    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    var scrollPercent = Math.round((scrollTop / docHeight) * 100);
-
-    scrollMarkers.forEach(function(marker) {
-      if (scrollPercent >= marker && trackedMarkers.indexOf(marker) === -1) {
-        trackedMarkers.push(marker);
-        trackScrollDepth(marker);
-      }
-    });
-  }
-
-  // Throttle scroll events
-  var scrollTimeout;
-  window.addEventListener('scroll', function() {
-    if (scrollTimeout) return;
-    scrollTimeout = setTimeout(function() {
-      scrollTimeout = null;
-      checkScroll();
-    }, 250);
-  });
-})();
-
-// ===========================================
-// DEBUG UTILITIES
-// ===========================================
-
-/**
- * Check if Meta Pixel is working
- * Call this from browser console: checkPixelStatus()
+ * Debug: Check if pixel is working
  */
 function checkPixelStatus() {
-  console.log('=== Meta Pixel Status ===');
-  console.log('fbq available:', typeof fbq === 'function');
-  console.log('Pixel ID:', META_PIXEL_ID);
-  
-  if (typeof fbq === 'function' && fbq.getState) {
-    console.log('Pixel state:', fbq.getState());
+  if (typeof fbq === 'function') {
+    console.log('[Analytics] ✅ Meta Pixel is loaded');
+    console.log('[Analytics] Pixel ID:', META_PIXEL_ID);
+    return true;
+  } else {
+    console.log('[Analytics] ❌ Meta Pixel NOT loaded');
+    return false;
   }
-  
-  // Check if pixel helper extension detected
-  if (window._fbq_pixel_helper) {
-    console.log('Pixel Helper detected: Yes');
-  }
-  
-  console.log('========================');
-  console.log('To test Lead tracking, run: testLeadEvent()');
 }
 
 /**
- * Test firing a Lead event
- * Call from console: testLeadEvent()
+ * Debug: Fire a test Lead event
  */
 function testLeadEvent() {
-  console.log('Firing test Lead event...');
-  var success = trackLead('console_test');
-  if (success) {
-    console.log('✅ Lead event fired! Check Meta Events Manager or Pixel Helper.');
-  } else {
-    console.log('❌ Lead event failed. Pixel may not be loaded.');
-  }
+  console.log('[Analytics] Firing test Lead event...');
+  trackLead('console_test');
+  console.log('[Analytics] Check Meta Pixel Helper or Events Manager');
 }
 
-// Make debug functions available globally
-window.checkPixelStatus = checkPixelStatus;
-window.testLeadEvent = testLeadEvent;
+// Track scroll depth
+let scrollDepthTracked = { 25: false, 50: false, 75: false, 100: false };
+
+window.addEventListener('scroll', function() {
+  const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+  
+  [25, 50, 75, 100].forEach(depth => {
+    if (scrollPercent >= depth && !scrollDepthTracked[depth]) {
+      scrollDepthTracked[depth] = true;
+      trackCustomEvent('ScrollDepth', { depth: depth });
+    }
+  });
+});
+
+// Expose functions globally
 window.trackEvent = trackEvent;
 window.trackLead = trackLead;
+window.trackCustomEvent = trackCustomEvent;
 window.trackButtonClick = trackButtonClick;
-
-// Log helpful message on load
-if (ANALYTICS_DEBUG) {
-  console.log('[Analytics] GreenRadius Analytics loaded. Run checkPixelStatus() to verify pixel.');
-}
+window.checkPixelStatus = checkPixelStatus;
+window.testLeadEvent = testLeadEvent;

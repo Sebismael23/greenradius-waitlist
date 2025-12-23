@@ -1,13 +1,38 @@
 /**
  * GreenRadius Main JavaScript
  * ============================
- * Shared functionality across all pages.
- * Include this file at the end of <body> on every page.
+ * Handles: Modal, Forms, Notifications, FAQ, Tabs, etc.
+ * Include this file at the end of <body>.
  */
 
-// ===========================================
-// MOBILE MENU
-// ===========================================
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('[Main] Initializing...');
+  
+  // Wait for components to load before initializing
+  document.addEventListener('componentsLoaded', initAfterComponents);
+  
+  // Also try to init immediately for pages without components
+  setTimeout(initAll, 100);
+});
+
+function initAfterComponents() {
+  console.log('[Main] Components loaded, initializing...');
+  initAll();
+}
+
+function initAll() {
+  initMobileMenu();
+  initWaitlistModal();
+  initWaitlistForms();
+  initSimpleEmailForms();
+  initFAQ();
+  initTabs();
+  initSmoothScroll();
+  initSocialProof();
+  console.log('[Main] All initialized');
+}
+
+// ==================== MOBILE MENU ====================
 function initMobileMenu() {
   const menuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
@@ -16,41 +41,31 @@ function initMobileMenu() {
     menuBtn.addEventListener('click', function() {
       mobileMenu.classList.toggle('hidden');
     });
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', function(e) {
-      if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
-        mobileMenu.classList.add('hidden');
-      }
-    });
   }
 }
 
-// ===========================================
-// WAITLIST MODAL
-// ===========================================
+// ==================== WAITLIST MODAL ====================
 function initWaitlistModal() {
   const modal = document.getElementById('waitlist-modal');
-  const modalBackdrop = document.getElementById('modal-backdrop');
-  const modalContent = document.getElementById('modal-content');
+  if (!modal) {
+    console.log('[Main] Modal not found, skipping modal init');
+    return;
+  }
+  
+  const backdrop = document.getElementById('modal-backdrop');
   const closeBtn = document.getElementById('close-modal');
-  const joinButtons = document.querySelectorAll('.join-waitlist-btn');
+  const modalContent = document.getElementById('modal-content');
+  const modalForm = document.getElementById('modal-waitlist-form');
+  const emailInput = document.getElementById('modal-email');
   
-  if (!modal) return;
-  
-  function openModal(prefilledEmail = '') {
-    // Track button click
-    if (typeof trackButtonClick === 'function') {
-      trackButtonClick('open_waitlist_modal');
-    }
-    
+  // Open modal function
+  window.openWaitlistModal = function(prefillEmail = '') {
+    console.log('[Main] Opening modal');
     modal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
     
-    // Prefill email if provided
-    const emailInput = document.getElementById('modal-email');
-    if (emailInput && prefilledEmail) {
-      emailInput.value = prefilledEmail;
+    if (prefillEmail && emailInput) {
+      emailInput.value = prefillEmail;
     }
     
     // Focus first input
@@ -58,175 +73,189 @@ function initWaitlistModal() {
       const firstInput = modal.querySelector('input:not([type="hidden"])');
       if (firstInput) firstInput.focus();
     }, 100);
-  }
+  };
   
-  function closeModal() {
+  // Close modal function
+  window.closeWaitlistModal = function() {
+    console.log('[Main] Closing modal');
     modal.classList.add('hidden');
     document.body.style.overflow = '';
+  };
+  
+  // Close on backdrop click
+  if (backdrop) {
+    backdrop.addEventListener('click', closeWaitlistModal);
   }
   
-  // Open modal from buttons
-  joinButtons.forEach(btn => {
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      
-      // Check if there's an associated email input
-      const emailInputId = this.dataset.emailInput;
-      let email = '';
-      if (emailInputId) {
-        const emailInput = document.getElementById(emailInputId);
-        if (emailInput) email = emailInput.value;
-      }
-      
-      openModal(email);
-    });
-  });
-  
-  // Close modal
+  // Close on X button
   if (closeBtn) {
-    closeBtn.addEventListener('click', closeModal);
-  }
-  
-  if (modalBackdrop) {
-    modalBackdrop.addEventListener('click', closeModal);
+    closeBtn.addEventListener('click', closeWaitlistModal);
   }
   
   // Close on Escape key
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-      closeModal();
+      closeWaitlistModal();
     }
   });
   
-  // Expose functions globally
-  window.openWaitlistModal = openModal;
-  window.closeWaitlistModal = closeModal;
-}
-
-// ===========================================
-// WAITLIST FORM SUBMISSION
-// ===========================================
-function initWaitlistForm() {
-  const form = document.getElementById('modal-waitlist-form');
-  const formMessage = document.getElementById('modal-form-message');
-  const modalTitle = document.getElementById('modal-title');
+  // Prevent close when clicking inside modal content
+  if (modalContent) {
+    modalContent.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+  }
   
-  if (!form) return;
+  // Handle modal form submission
+  if (modalForm) {
+    modalForm.addEventListener('submit', handleModalFormSubmit);
+  }
   
-  form.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const originalText = submitBtn.innerHTML;
-    
-    // Show loading state
-    submitBtn.innerHTML = '<span class="animate-pulse">Joining...</span>';
-    submitBtn.disabled = true;
-    
-    // Gather form data
-    const formData = {
-      first_name: document.getElementById('modal-first-name')?.value || '',
-      last_name: document.getElementById('modal-last-name')?.value || '',
-      email_address: document.getElementById('modal-email')?.value || '',
-      city: document.getElementById('modal-city')?.value || '',
-      state: document.getElementById('modal-state')?.value || '',
-      company: document.getElementById('modal-company')?.value || '',
-      comment: document.getElementById('modal-comment')?.value || ''
-    };
-    
-    try {
-      const response = await fetch('/api/subscribe', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
+  // Attach click handlers to all "Join Waitlist" buttons
+  document.querySelectorAll('.join-waitlist-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
       
-      const data = await response.json();
+      // Check if there's a linked email input to prefill
+      const emailInputId = btn.dataset.emailInput;
+      let prefillEmail = '';
       
-      if (data.success) {
-        // Update modal to success state
-        if (modalTitle) {
-          modalTitle.textContent = "You're In! 🎉";
+      if (emailInputId) {
+        const linkedInput = document.getElementById(emailInputId);
+        if (linkedInput && linkedInput.value) {
+          prefillEmail = linkedInput.value;
         }
-        
-        form.classList.add('hidden');
-        if (formMessage) {
-          formMessage.classList.remove('hidden');
-          formMessage.innerHTML = `
-            <div class="text-center py-4">
-              <div class="text-4xl mb-2">✅</div>
-              <p class="text-lg font-semibold text-emerald-600">You've joined the waitlist!</p>
-              <p class="text-sm text-gray-600 mt-2">We'll notify you when GreenRadius launches in your area. Check your inbox for a confirmation email.</p>
-            </div>
-          `;
-        }
-        
-        // 🎯 FIRE META PIXEL LEAD EVENT
-        if (typeof trackLead === 'function') {
-          trackLead('modal_form');
-          console.log('[Form] Lead event fired successfully');
-        } else {
-          console.warn('[Form] trackLead function not available');
-        }
-        
-        // Refresh subscriber data
-        if (typeof fetchRecentSubscribers === 'function') {
-          fetchRecentSubscribers();
-        }
-        
-      } else {
-        throw new Error(data.error || 'Subscription failed');
       }
       
-    } catch (error) {
-      console.error('[Form] Submission error:', error);
-      
-      if (formMessage) {
-        formMessage.classList.remove('hidden');
-        formMessage.innerHTML = `
-          <p class="text-red-500 text-sm mt-2">Something went wrong. Please try again.</p>
-        `;
-      }
-      
-      submitBtn.innerHTML = originalText;
-      submitBtn.disabled = false;
-    }
+      openWaitlistModal(prefillEmail);
+    });
   });
+  
+  console.log('[Main] Modal initialized');
 }
 
-// ===========================================
-// SIMPLE EMAIL FORM (for features/about pages)
-// ===========================================
-function initSimpleEmailForms() {
-  const forms = document.querySelectorAll('[data-waitlist-form]');
+async function handleModalFormSubmit(e) {
+  e.preventDefault();
   
-  forms.forEach(form => {
+  const form = e.target;
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const originalText = submitBtn.innerHTML;
+  const messageDiv = document.getElementById('modal-form-message');
+  
+  // Get form data
+  const formData = {
+    email: document.getElementById('modal-email')?.value || '',
+    firstName: document.getElementById('modal-first-name')?.value || '',
+    lastName: document.getElementById('modal-last-name')?.value || '',
+    city: document.getElementById('modal-city')?.value || '',
+    state: document.getElementById('modal-state')?.value || '',
+    company: document.getElementById('modal-company')?.value || '',
+    comment: document.getElementById('modal-comment')?.value || ''
+  };
+  
+  // Validate
+  if (!formData.email || !formData.firstName) {
+    showFormMessage(messageDiv, 'Please fill in required fields.', 'error');
+    return;
+  }
+  
+  // Show loading state
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<span class="animate-pulse">Joining...</span>';
+  
+  try {
+    const response = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email_address: formData.email,
+        merge_fields: {
+          FNAME: formData.firstName,
+          LNAME: formData.lastName,
+          CITY: formData.city,
+          STATE: formData.state,
+          COMPANY: formData.company,
+          COMMENT: formData.comment
+        }
+      })
+    });
+    
+    const result = await response.json();
+    
+    if (response.ok) {
+      // Track Lead event
+      if (typeof trackLead === 'function') {
+        trackLead('modal_form');
+      }
+      
+      // Show success
+      form.innerHTML = `
+        <div class="text-center py-8">
+          <div class="text-6xl mb-4 success-checkmark">✅</div>
+          <h3 class="text-2xl font-bold text-emerald-600 mb-2">You're on the list!</h3>
+          <p class="text-gray-600 mb-4">Thanks for joining, ${formData.firstName}!</p>
+          <p class="text-sm text-gray-500">Check your email for confirmation.</p>
+        </div>
+      `;
+      
+      // Close modal after 3 seconds
+      setTimeout(closeWaitlistModal, 3000);
+    } else {
+      throw new Error(result.error || 'Subscription failed');
+    }
+  } catch (error) {
+    console.error('[Main] Form submission error:', error);
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalText;
+    showFormMessage(messageDiv, error.message || 'Something went wrong. Please try again.', 'error');
+  }
+}
+
+function showFormMessage(container, message, type) {
+  if (!container) return;
+  
+  container.className = type === 'error' 
+    ? 'mt-4 p-3 bg-red-50 text-red-700 rounded-lg text-sm'
+    : 'mt-4 p-3 bg-emerald-50 text-emerald-700 rounded-lg text-sm';
+  container.textContent = message;
+  container.classList.remove('hidden');
+}
+
+// ==================== SIMPLE WAITLIST FORMS ====================
+function initWaitlistForms() {
+  // Handle forms with data-waitlist-form attribute
+  document.querySelectorAll('form[data-waitlist-form]').forEach(form => {
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
       
+      const formSource = form.dataset.waitlistForm || 'unknown';
       const emailInput = form.querySelector('input[type="email"]');
       const submitBtn = form.querySelector('button[type="submit"]');
+      
+      if (!emailInput || !emailInput.value) {
+        alert('Please enter your email address.');
+        return;
+      }
+      
       const originalText = submitBtn.innerHTML;
-      
-      if (!emailInput || !emailInput.value) return;
-      
-      // Show loading state
-      submitBtn.innerHTML = '<span class="animate-pulse">Joining...</span>';
       submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="animate-pulse">Joining...</span>';
       
       try {
         const response = await fetch('/api/subscribe', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email_address: emailInput.value })
+          body: JSON.stringify({
+            email_address: emailInput.value,
+            merge_fields: {}
+          })
         });
         
-        const data = await response.json();
-        
-        if (data.success) {
-          // Replace form with success message
+        if (response.ok) {
+          if (typeof trackLead === 'function') {
+            trackLead(formSource);
+          }
+          
           form.innerHTML = `
             <div class="text-center py-4">
               <div class="text-4xl mb-2">🎉</div>
@@ -234,189 +263,77 @@ function initSimpleEmailForms() {
               <p class="text-sm opacity-75">Check your email for confirmation.</p>
             </div>
           `;
-          
-          // 🎯 FIRE META PIXEL LEAD EVENT
-          if (typeof trackLead === 'function') {
-            const formSource = form.dataset.waitlistForm || 'email_form';
-            trackLead(formSource);
-          }
-          
         } else {
-          throw new Error(data.error || 'Failed');
+          throw new Error('Failed to subscribe');
         }
-        
       } catch (error) {
-        console.error('[Form] Error:', error);
-        submitBtn.innerHTML = originalText;
+        console.error('[Main] Simple form error:', error);
         submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
         alert('Something went wrong. Please try again.');
       }
     });
   });
 }
 
-// ===========================================
-// SOCIAL PROOF NOTIFICATIONS
-// ===========================================
-let recentSubscribers = [];
-let currentNotificationIndex = 0;
-
-async function fetchRecentSubscribers() {
-  try {
-    const response = await fetch('/api/recent-subscribers');
-    const data = await response.json();
-    
-    if (data.subscribers && data.subscribers.length > 0) {
-      recentSubscribers = data.subscribers;
-    }
-    
-    // Update waitlist count
-    if (data.totalCount) {
-      updateWaitlistCount(data.totalCount);
-    }
-    
-  } catch (error) {
-    console.log('[Notifications] Could not fetch subscribers:', error.message);
-  }
-}
-
-function updateWaitlistCount(count) {
-  const countEl = document.getElementById('waitlist-count');
-  const footerCountEl = document.getElementById('footer-count');
-  
-  if (countEl) countEl.textContent = count + ' people';
-  if (footerCountEl) footerCountEl.textContent = count;
-}
-
-function getTimeAgo(timestamp) {
-  if (!timestamp) return 'recently';
-  
-  const now = new Date();
-  const then = new Date(timestamp);
-  const diffMs = now - then;
-  const diffMins = Math.floor(diffMs / 60000);
-  const diffHours = Math.floor(diffMs / 3600000);
-  const diffDays = Math.floor(diffMs / 86400000);
-  
-  if (diffMins < 1) return 'just now';
-  if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
-  if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
-  if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
-  return 'recently';
-}
-
-function showNotification() {
-  const notification = document.getElementById('notification');
-  const locationEl = document.getElementById('notification-location');
-  const messageEl = document.getElementById('notification-message');
-  
-  if (!notification || !locationEl || !messageEl) return;
-  
-  if (recentSubscribers.length > 0) {
-    const subscriber = recentSubscribers[currentNotificationIndex];
-    
-    // Build location string
-    const city = subscriber.city?.trim() || '';
-    const state = subscriber.state?.trim() || '';
-    let location = '';
-    
-    if (city && state) {
-      location = `${city}, ${state}`;
-    } else if (city) {
-      location = city;
-    } else if (state) {
-      location = state;
-    } else if (subscriber.location?.trim()) {
-      location = subscriber.location.trim();
-    }
-    
-    const timeAgo = getTimeAgo(subscriber.timestamp);
-    
-    locationEl.textContent = location ? `Someone from ${location}` : 'Someone';
-    messageEl.textContent = `joined the waitlist${timeAgo ? ' ' + timeAgo : ''}! 🎉`;
-    
-    // Cycle through subscribers
-    currentNotificationIndex = (currentNotificationIndex + 1) % recentSubscribers.length;
-    
-  } else {
-    locationEl.textContent = 'Someone';
-    messageEl.textContent = 'joined the waitlist recently! 🎉';
-  }
-  
-  notification.classList.remove('hidden');
-  
-  // Auto-hide after 5 seconds
-  setTimeout(() => {
-    notification.classList.add('hidden');
-  }, 5000);
-}
-
-function initNotifications() {
-  // Fetch subscriber data
-  fetchRecentSubscribers();
-  
-  // Show first notification after 5 seconds
-  setTimeout(() => {
-    showNotification();
-  }, 5000);
-  
-  // Show notifications periodically
-  setInterval(() => {
-    showNotification();
-  }, 60000);
-}
-
-// ===========================================
-// FAQ TOGGLE
-// ===========================================
-function toggleFaq(index) {
-  const content = document.getElementById('faq-content-' + index);
-  const icon = document.getElementById('faq-icon-' + index);
-  
-  if (content && icon) {
-    if (content.classList.contains('hidden')) {
-      content.classList.remove('hidden');
-      icon.textContent = '−';
-    } else {
-      content.classList.add('hidden');
-      icon.textContent = '+';
-    }
-  }
-}
-
-// Expose FAQ toggle globally
-window.toggleFaq = toggleFaq;
-
-// ===========================================
-// TAB FUNCTIONALITY
-// ===========================================
-function setActiveTab(tabId) {
-  // Hide all content
-  document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-  
-  // Show selected content
-  const content = document.getElementById('content-' + tabId);
-  if (content) content.classList.remove('hidden');
-  
-  // Update button styles
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.classList.remove('bg-emerald-600', 'text-white');
-    btn.classList.add('text-gray-600');
+// ==================== SIMPLE EMAIL FORMS ====================
+function initSimpleEmailForms() {
+  // Handle simple inline email forms that open the modal
+  document.querySelectorAll('form[data-open-modal]').forEach(form => {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const emailInput = form.querySelector('input[type="email"]');
+      const email = emailInput ? emailInput.value : '';
+      openWaitlistModal(email);
+    });
   });
-  
-  const activeTab = document.getElementById('tab-' + tabId);
-  if (activeTab) {
-    activeTab.classList.add('bg-emerald-600', 'text-white');
-    activeTab.classList.remove('text-gray-600');
-  }
 }
 
-// Expose globally
-window.setActiveTab = setActiveTab;
+// ==================== FAQ TOGGLE ====================
+function initFAQ() {
+  // Make toggleFaq available globally
+  window.toggleFaq = function(id) {
+    const content = document.getElementById(`faq-content-${id}`);
+    const icon = document.getElementById(`faq-icon-${id}`);
+    
+    if (content && icon) {
+      content.classList.toggle('hidden');
+      icon.textContent = content.classList.contains('hidden') ? '+' : '−';
+    }
+  };
+}
 
-// ===========================================
-// SMOOTH SCROLL
-// ===========================================
+// ==================== TABS ====================
+function initTabs() {
+  // Make setActiveTab available globally
+  window.setActiveTab = function(tabName) {
+    // Hide all tab content
+    document.querySelectorAll('.tab-content').forEach(content => {
+      content.classList.add('hidden');
+    });
+    
+    // Reset all tab buttons
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.classList.remove('bg-emerald-600', 'text-white');
+      btn.classList.add('text-gray-600');
+    });
+    
+    // Show selected content
+    const selectedContent = document.getElementById(`content-${tabName}`);
+    if (selectedContent) {
+      selectedContent.classList.remove('hidden');
+    }
+    
+    // Activate selected tab
+    const selectedTab = document.getElementById(`tab-${tabName}`);
+    if (selectedTab) {
+      selectedTab.classList.remove('text-gray-600');
+      selectedTab.classList.add('bg-emerald-600', 'text-white');
+    }
+  };
+}
+
+// ==================== SMOOTH SCROLL ====================
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
@@ -426,38 +343,68 @@ function initSmoothScroll() {
       const target = document.querySelector(targetId);
       if (target) {
         e.preventDefault();
-        target.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-        
-        // Close mobile menu if open
-        const mobileMenu = document.getElementById('mobile-menu');
-        if (mobileMenu) mobileMenu.classList.add('hidden');
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });
   });
 }
 
-// ===========================================
-// INITIALIZE EVERYTHING
-// ===========================================
-document.addEventListener('DOMContentLoaded', function() {
-  console.log('[Main] Initializing GreenRadius...');
+// ==================== SOCIAL PROOF NOTIFICATIONS ====================
+function initSocialProof() {
+  const notification = document.getElementById('notification');
+  if (!notification) return;
   
-  initMobileMenu();
-  initWaitlistModal();
-  initWaitlistForm();
-  initSimpleEmailForms();
-  initSmoothScroll();
+  const locationSpan = document.getElementById('notification-location');
+  const messageSpan = document.getElementById('notification-message');
   
-  // Only init notifications on homepage
-  if (document.getElementById('notification')) {
-    initNotifications();
+  // Sample data (will be replaced with real API data)
+  const sampleNotifications = [
+    { location: 'Someone in Salt Lake City', time: '2 minutes ago' },
+    { location: 'Someone in Provo', time: '5 minutes ago' },
+    { location: 'Someone in Park City', time: '12 minutes ago' },
+    { location: 'Someone in Ogden', time: '18 minutes ago' }
+  ];
+  
+  let notificationIndex = 0;
+  
+  function showNotification() {
+    const data = sampleNotifications[notificationIndex];
+    
+    if (locationSpan) locationSpan.textContent = data.location;
+    if (messageSpan) messageSpan.textContent = `joined the waitlist ${data.time}`;
+    
+    notification.classList.remove('hidden');
+    notification.style.animation = 'slide-in 0.5s ease-out';
+    
+    // Hide after 5 seconds
+    setTimeout(() => {
+      notification.classList.add('hidden');
+    }, 5000);
+    
+    notificationIndex = (notificationIndex + 1) % sampleNotifications.length;
   }
   
-  console.log('[Main] GreenRadius initialized.');
-});
+  // Show first notification after 8 seconds
+  setTimeout(showNotification, 8000);
+  
+  // Then show every 30 seconds
+  setInterval(showNotification, 30000);
+  
+  // Try to fetch real data
+  fetchRecentSubscribers();
+}
 
-// Expose fetch function for manual refresh
-window.fetchRecentSubscribers = fetchRecentSubscribers;
+async function fetchRecentSubscribers() {
+  try {
+    const response = await fetch('/api/recent-subscribers');
+    if (response.ok) {
+      const data = await response.json();
+      if (data.subscribers && data.subscribers.length > 0) {
+        console.log('[Main] Got real subscriber data');
+        // Could update notification system with real data here
+      }
+    }
+  } catch (error) {
+    // Silently fail, will use sample data
+  }
+}

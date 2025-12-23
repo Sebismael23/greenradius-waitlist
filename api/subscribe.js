@@ -1,12 +1,10 @@
-// Vercel serverless function to handle Mailchimp subscriptions
-
+// Vercel Serverless Function for Mailchimp Subscription
 export default async function handler(req, res) {
-  // CORS headers
+  // Set CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  // Handle preflight
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
@@ -15,83 +13,58 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const MAILCHIMP_API_KEY = process.env.MAILCHIMP_API_KEY;
-  const MAILCHIMP_LIST_ID = process.env.MAILCHIMP_LIST_ID;
-  const MAILCHIMP_SERVER_PREFIX = process.env.MAILCHIMP_SERVER_PREFIX;
+  const { email_address, first_name, last_name, city, state, company, comment } = req.body;
 
-  if (!MAILCHIMP_API_KEY || !MAILCHIMP_LIST_ID || !MAILCHIMP_SERVER_PREFIX) {
-    return res.status(500).json({ error: 'Mailchimp configuration missing' });
+  if (!email_address) {
+    return res.status(400).json({ error: 'Email is required' });
   }
 
-  try {
+  const API_KEY = process.env.MAILCHIMP_API_KEY;
+  const LIST_ID = process.env.MAILCHIMP_LIST_ID;
+  const SERVER_PREFIX = process.env.MAILCHIMP_SERVER_PREFIX || 'us21';
 
-    // Accept all fields from modal form
-    const {
-      email_address,
-      first_name,
-      last_name,
-      city,
-      state,
-      company,
-      comment
-    } = req.body;
+  if (!API_KEY || !LIST_ID) {
+    console.error('Missing Mailchimp credentials');
+    return res.status(500).json({ error: 'Server configuration error' });
+  }
 
-    if (!email_address) {
-      return res.status(400).json({ error: 'Email is required' });
-    }
+  const url = `https://${SERVER_PREFIX}.api.mailchimp.com/3.0/lists/${LIST_ID}/members`;
 
-    const url = `https://${MAILCHIMP_SERVER_PREFIX}.api.mailchimp.com/3.0/lists/${MAILCHIMP_LIST_ID}/members`;
-
-    // Map fields to Mailchimp merge fields (adjust keys to match your Mailchimp audience fields)
-    const merge_fields = {
+  const data = {
+    email_address,
+    status: 'subscribed',
+    merge_fields: {
       FNAME: first_name || '',
       LNAME: last_name || '',
       CITY: city || '',
       STATE: state || '',
       COMPANY: company || '',
-      COMMENT: (comment !== undefined && comment !== null) ? String(comment) : ''
-    };
+      COMMENT: comment || ''
+    }
+  };
 
+  try {
     const response = await fetch(url, {
       method: 'POST',
       headers: {
-        'Authorization': `Basic ${Buffer.from(`anystring:${MAILCHIMP_API_KEY}`).toString('base64')}`,
+        'Authorization': `apikey ${API_KEY}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        email_address,
-        status: 'subscribed',
-        tags: ['waitlist', 'early-adopter'],
-        merge_fields
-      })
+      body: JSON.stringify(data)
     });
 
-    const data = await response.json();
+    const result = await response.json();
 
     if (response.ok) {
-      return res.status(200).json({ 
-        success: true, 
-        message: 'Successfully subscribed!'
-      });
-    } else if (data.title === 'Member Exists') {
-      return res.status(200).json({ 
-        success: true, 
-        message: "You're already on the list!"
-      });
+      return res.status(200).json({ success: true, message: 'Subscribed successfully' });
+    } else if (result.title === 'Member Exists') {
+      return res.status(200).json({ success: true, message: 'Already subscribed' });
     } else {
-      // Return full Mailchimp error response for debugging
-      return res.status(500).json({
-        error: data.detail || 'Subscription failed',
-        mailchimp: data
-      });
+      console.error('Mailchimp error:', result);
+      return res.status(400).json({ error: result.detail || 'Subscription failed' });
     }
-
   } catch (error) {
-    console.error('Subscription error:', error);
-    // If error has a response with data, include it
-    return res.status(500).json({
-      error: error.message || 'Failed to subscribe',
-      mailchimp: error.response?.data || null
-    });
+    console.error('Server error:', error);
+    return res.status(500).json({ error: 'Server error' });
   }
 }

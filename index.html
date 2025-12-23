@@ -3,20 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GreenRadius - Turn Your Neighborhood Into an Environmental Force</title>
+  <title>GreenRadius</title>
   <meta name="description" content="Join the waitlist for GreenRadius - the app that helps you make real environmental impact with your neighbors through fun challenges and community action.">
 
-  <!-- Meta Pixel -->
-  <script src="js/analytics.js"></script>
-  <noscript>
-    <img height="1" width="1" style="display:none" 
-         src="https://www.facebook.com/tr?id=1869362300613991&ev=PageView&noscript=1" alt=""/>
-  </noscript>
+  <!-- Meta Pixel Code -->
+  <script>
+      // Meta Pixel event tracking helper
+      function trackEvent(event, params = {}) {
+        if (typeof fbq === 'function') {
+          fbq('track', event, params);
+        }
+      }
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1869362300613991');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1869362300613991&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="images/green-logo.png">
   
-  <!-- Tailwind CSS -->
+  <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
   <!-- Google Fonts -->
@@ -24,15 +41,122 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <!-- Shared Styles -->
-  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    
+    /* Animations */
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    @keyframes slide-in {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes leaf-float {
+      0% { transform: translateX(-100px) translateY(0) rotate(0deg); }
+      25% { transform: translateX(100px) translateY(-50px) rotate(90deg); }
+      50% { transform: translateX(-50px) translateY(50px) rotate(180deg); }
+      75% { transform: translateX(50px) translateY(-30px) rotate(270deg); }
+      100% { transform: translateX(-100px) translateY(0) rotate(360deg); }
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.6); }
+    }
+    
+    .animate-fade-in { animation: fade-in 0.8s ease-out; }
+    .animate-float { animation: float 3s ease-in-out infinite; }
+    .animate-slide-in { animation: slide-in 0.5s ease-out; }
+    .animate-leaf-float { animation: leaf-float 10s infinite linear; }
+    .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    
+    .hover-lift {
+      transition: all 0.3s ease;
+    }
+    .hover-lift:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+    
+    /* Waitlist badge */
+    .waitlist-badge {
+      background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+    
+    /* Success state */
+    .success-checkmark {
+      animation: scale-in 0.3s ease-out;
+    }
+    
+    @keyframes scale-in {
+      from { transform: scale(0); }
+      to { transform: scale(1); }
+    }
+  </style>
 </head>
 <body class="bg-white text-gray-900">
-  
-  <!-- Navbar Component -->
-  <div data-component="navbar"></div>
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-lg z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center">
+          <a href="#" class="flex items-center space-x-2">
+            <img src="images/green-logo.png" alt="GreenRadius Logo" width="28" height="28" class="object-contain">
+            <span class="font-bold text-xl bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">
+              GreenRadius
+            </span>
+          </a>
+          <div class="hidden md:flex ml-10 space-x-8">
+            <a href="features.html" class="text-gray-700 hover:text-emerald-600 transition">Features</a>
+            <a href="#how-it-works" class="text-gray-700 hover:text-emerald-600 transition">How it Works</a>
+            <a href="#impact" class="text-gray-700 hover:text-emerald-600 transition">Impact</a>
+            <a href="about.html" class="text-gray-700 hover:text-emerald-600 transition">About</a>
+          </div>
+        </div>
+        <div class="hidden md:flex items-center space-x-4">
+          <span class="waitlist-badge text-white text-xs px-3 py-1 rounded-full font-semibold">
+            🚀 Coming Soon to Utah
+          </span>
+          <button type="button" class="bg-emerald-600 text-white px-6 py-2 rounded-full hover:bg-emerald-700 transition hover:scale-105 font-semibold join-waitlist-btn">
+            Join Waitlist →
+          </button>
+        </div>
+        <button id="mobile-menu-btn" class="md:hidden">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+      <div class="px-2 pt-2 pb-3 space-y-1">
+        <a href="features.html" class="block px-3 py-2 text-gray-700">Features</a>
+        <a href="#how-it-works" class="block px-3 py-2 text-gray-700">How it Works</a>
+        <a href="#impact" class="block px-3 py-2 text-gray-700">Impact</a>
+        <a href="about.html" class="block px-3 py-2 text-gray-700">About</a>
+        <a href="#waitlist" class="block">
+          <button type="button" class="w-full bg-emerald-600 text-white px-3 py-2 rounded-lg font-semibold join-waitlist-btn">Join Waitlist →</button>
+        </a>
+      </div>
+    </div>
+  </nav>
 
-  <!-- ==================== HERO SECTION ==================== -->
+  <!-- Hero Section -->
   <section class="pt-16 relative overflow-hidden">
     <div class="absolute inset-0 bg-gradient-to-br from-emerald-600 via-blue-600 to-purple-600 opacity-5"></div>
     
@@ -61,25 +185,48 @@
         
         <!-- Waitlist Form -->
         <div id="waitlist" class="max-w-md mx-auto mb-6">
-          <div class="flex flex-col sm:flex-row gap-3">
-            <input 
-              type="email" 
-              id="email-input"
-              placeholder="📧 Enter your email" 
-              class="flex-1 px-6 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
-            >
-            <button type="button" class="bg-emerald-600 text-white px-8 py-3 rounded-full hover:bg-emerald-700 transition hover:scale-105 font-semibold whitespace-nowrap join-waitlist-btn" data-email-input="email-input">
-              Join Waitlist 🚀
-            </button>
+          <div class="space-y-3">
+            <div class="flex flex-col sm:flex-row gap-3">
+              <input 
+                type="email" 
+                id="email-input"
+                placeholder="📧 Enter your email" 
+                class="flex-1 px-6 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200"
+              >
+              <button type="button" class="bg-emerald-600 text-white px-8 py-3 rounded-full hover:bg-emerald-700 transition hover:scale-105 font-semibold whitespace-nowrap join-waitlist-btn" data-email-input="email-input">
+                Join Waitlist 🚀
+              </button>
+            </div>
           </div>
           
-          <div class="flex items-center justify-center gap-4 mt-4 text-sm text-gray-600">
+          <!-- Success State (hidden by default) -->
+          <div id="success-state" class="hidden text-center py-6">
+            <div class="success-checkmark inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-full mb-4">
+              <span class="text-3xl">✅</span>
+            </div>
+            <h3 class="text-xl font-bold text-emerald-600 mb-2">You've joined the waitlist!</h3>
+            <p class="text-gray-600">You'll be one of the first people notified when GreenRadius launches in your area. Check your inbox for a confirmation email.</p>
+          </div>
+          
+          <div id="trust-badges" class="flex items-center justify-center gap-4 mt-4 text-sm text-gray-600">
             <span>✓ Free to join</span>
             <span>✓ No spam, ever</span>
             <span>✓ Early access perks</span>
           </div>
         </div>
         
+        <!-- Social proof -->
+        <!-- <div class="flex items-center justify-center gap-2 text-gray-600 mb-4">
+          <div class="flex -space-x-2">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-blue-500 border-2 border-white"></div>
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-pink-500 border-2 border-white"></div>
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 border-2 border-white"></div>
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 border-2 border-white"></div>
+          </div>
+          <span class="font-semibold" id="waitlist-count">847 people</span>
+          <span>already on the waitlist</span>
+        </div>
+         -->
         <div class="flex items-center justify-center gap-2 text-yellow-500">
           <span>⭐⭐⭐⭐⭐</span>
           <span class="text-gray-700 italic">"Finally, meaningful action that actually feels achievable!"</span>
@@ -104,7 +251,7 @@
     </div>
   </section>
 
-  <!-- ==================== HOW IT WORKS ==================== -->
+  <!-- How It Works -->
   <section id="how-it-works" class="py-20 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4">
       <h2 class="text-4xl font-bold text-center mb-12">How It Works</h2>
@@ -119,6 +266,7 @@
         </div>
         
         <div class="bg-white rounded-2xl shadow-xl p-8">
+          <!-- Join Tab -->
           <div id="content-join" class="tab-content text-center">
             <div class="text-6xl mb-4">🏘️</div>
             <h3 class="text-2xl font-bold mb-4">Join Your Green Community</h3>
@@ -129,6 +277,7 @@
             </div>
           </div>
           
+          <!-- Act Tab -->
           <div id="content-act" class="tab-content hidden text-center">
             <div class="text-6xl mb-4">🎯</div>
             <h3 class="text-2xl font-bold mb-4">Complete Fun Challenges</h3>
@@ -152,6 +301,7 @@
             </div>
           </div>
           
+          <!-- Impact Tab -->
           <div id="content-impact" class="tab-content hidden text-center">
             <div class="text-6xl mb-4">📈</div>
             <h3 class="text-2xl font-bold mb-4">See Real Impact</h3>
@@ -166,13 +316,14 @@
     </div>
   </section>
 
-  <!-- ==================== FEATURES PREVIEW ==================== -->
+  <!-- Feature Showcase (Bento Grid) -->
   <section id="features" class="py-20">
     <div class="max-w-7xl mx-auto px-4">
       <h2 class="text-4xl font-bold text-center mb-4">Everything You Need to Go Green</h2>
       <p class="text-gray-600 text-center mb-12">Powerful features designed for real community impact</p>
       
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Interactive Map - Large -->
         <div class="md:col-span-2 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl p-8 text-white hover-lift">
           <h3 class="text-2xl font-bold mb-2">🗺️ Interactive Green Map</h3>
           <p class="opacity-90 mb-4">Find eco-friendly spots, recycling centers, and community gardens near you</p>
@@ -184,6 +335,7 @@
           </div>
         </div>
         
+        <!-- Leaderboards -->
         <div class="bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl p-6 text-white hover-lift">
           <h3 class="text-xl font-bold mb-2">🏆 Leaderboards</h3>
           <p class="text-sm opacity-90 mb-4">Compete with neighbors</p>
@@ -194,146 +346,586 @@
           </div>
         </div>
         
+        <!-- AI Challenges -->
         <div class="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-6 text-white hover-lift">
-          <h3 class="text-xl font-bold mb-2">🤖 Smart Challenges</h3>
-          <p class="text-sm opacity-90 mb-4">AI-powered suggestions</p>
+          <h3 class="text-xl font-bold mb-2">🎯 AI Challenges</h3>
+          <p class="text-sm opacity-90 mb-4">Personalized daily missions</p>
           <div class="bg-white/20 rounded-lg p-3">
-            <div class="text-sm">"Based on today's weather, try biking to work!"</div>
+            <div class="text-2xl mb-1">🚶‍♀️</div>
+            <div class="text-sm">Today: Walk 5,000 steps</div>
           </div>
         </div>
         
-        <div class="bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl p-6 text-white hover-lift">
-          <h3 class="text-xl font-bold mb-2">🤝 Share Items</h3>
-          <p class="text-sm opacity-90 mb-4">Borrow from neighbors</p>
-          <div class="bg-white/20 rounded-lg p-3 text-sm">
-            <div>🔧 Power drill - 2 doors away</div>
-            <div>🪜 Ladder - Next building</div>
+        <!-- Impact Dashboard - Large -->
+        <div class="md:col-span-2 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl p-8 text-white hover-lift">
+          <h3 class="text-2xl font-bold mb-4">📊 Impact Dashboard</h3>
+          <p class="opacity-90 mb-4">See your real environmental difference</p>
+          <div class="grid grid-cols-3 gap-4">
+            <div class="bg-white/20 rounded-lg p-3 text-center">
+              <div class="text-2xl font-bold">124kg</div>
+              <div class="text-xs">CO₂ Saved</div>
+            </div>
+            <div class="bg-white/20 rounded-lg p-3 text-center">
+              <div class="text-2xl font-bold">3,420L</div>
+              <div class="text-xs">Water Saved</div>
+            </div>
+            <div class="bg-white/20 rounded-lg p-3 text-center">
+              <div class="text-2xl font-bold">89</div>
+              <div class="text-xs">Actions</div>
+            </div>
           </div>
         </div>
         
-        <div class="bg-gradient-to-br from-teal-500 to-cyan-600 rounded-2xl p-6 text-white hover-lift">
-          <h3 class="text-xl font-bold mb-2">🎁 Local Rewards</h3>
-          <p class="text-sm opacity-90 mb-4">Earn from local businesses</p>
-          <div class="bg-white/20 rounded-lg p-3 text-sm">
-            <div>☕ Free coffee at Bean & Brew</div>
-            <div>🥗 10% off at Green Grocer</div>
+        <!-- Item Sharing -->
+        <div class="bg-gradient-to-br from-green-500 to-teal-500 rounded-2xl p-6 text-white hover-lift">
+          <h3 class="text-xl font-bold mb-2">🤝 Item Sharing</h3>
+          <p class="text-sm opacity-90 mb-4">Borrow & lend with neighbors</p>
+          <div class="flex gap-2 flex-wrap">
+            <span class="bg-white/20 px-2 py-1 rounded text-xs">Ladder</span>
+            <span class="bg-white/20 px-2 py-1 rounded text-xs">Tools</span>
+            <span class="bg-white/20 px-2 py-1 rounded text-xs">Books</span>
           </div>
         </div>
-      </div>
-      
-      <div class="text-center mt-8">
-        <a href="features.html" class="inline-flex items-center text-emerald-600 font-semibold hover:underline">
-          See all features →
-        </a>
+        
+        <!-- Rewards -->
+        <div class="bg-gradient-to-br from-pink-500 to-red-500 rounded-2xl p-6 text-white hover-lift">
+          <h3 class="text-xl font-bold mb-2">🌟 Earn Rewards</h3>
+          <p class="text-sm opacity-90 mb-4">Get discounts at local green businesses</p>
+          <div class="bg-white/20 rounded-lg p-3">
+            <div class="text-sm font-semibold">15% off at Green Café</div>
+            <div class="text-xs opacity-75">Unlocked!</div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ==================== IMPACT SECTION ==================== -->
-  <section id="impact" class="py-20 bg-gradient-to-br from-emerald-600 via-blue-600 to-purple-600 text-white">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <h2 class="text-4xl font-bold mb-4">The Impact We'll Create Together</h2>
-      <p class="text-xl opacity-90 mb-12">When neighborhoods unite, real change happens</p>
+  <!-- Community Stories
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center mb-4">What Early Supporters Are Saying</h2>
+      <p class="text-gray-600 text-center mb-12">Join a growing community of people ready to make a difference</p>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-2xl shadow-lg p-6 hover-lift">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-16 h-16 bg-gradient-to-br from-emerald-400 to-blue-500 rounded-full"></div>
+            <div>
+              <div class="font-bold">Sarah Chen</div>
+              <div class="text-sm text-gray-600">Brooklyn, NY</div>
+            </div>
+          </div>
+          <p class="text-gray-700 italic mb-4">"I've been waiting for something like this! Can't wait to get my whole block involved."</p>
+          <div class="flex items-center gap-2 text-sm text-emerald-600">
+            <span>🌍</span>
+            <span>Waitlist #42</span>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-2xl shadow-lg p-6 hover-lift">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full"></div>
+            <div>
+              <div class="font-bold">Marcus Johnson</div>
+              <div class="text-sm text-gray-600">Austin, TX</div>
+            </div>
+          </div>
+          <p class="text-gray-700 italic mb-4">"The gamification aspect is brilliant. Making sustainability fun is the key to mass adoption."</p>
+          <div class="flex items-center gap-2 text-sm text-blue-600">
+            <span>🌍</span>
+            <span>Waitlist #156</span>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-2xl shadow-lg p-6 hover-lift">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full"></div>
+            <div>
+              <div class="font-bold">Priya Patel</div>
+              <div class="text-sm text-gray-600">Seattle, WA</div>
+            </div>
+          </div>
+          <p class="text-gray-700 italic mb-4">"Finally an app that connects environmental action with community building!"</p>
+          <div class="flex items-center gap-2 text-sm text-purple-600">
+            <span>🌍</span>
+            <span>Waitlist #289</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+  <!-- Impact Counter -->
+  <section id="impact" class="py-20">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center mb-4">🌍 Together, we can save...</h2>
+      <p class="text-gray-600 text-center mb-12">Projected impact when we reach 10,000 members</p>
       
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-        <div class="hover-lift">
-          <div class="text-5xl font-bold mb-2">50K+</div>
-          <div class="text-sm opacity-80">Kg CO₂ saved per neighborhood/year</div>
+        <div class="text-center">
+          <div class="text-4xl font-bold text-emerald-600 mb-2">2.5M kg</div>
+          <div class="text-gray-600">CO₂ Reduced</div>
+          <div class="text-sm text-gray-500 mt-1">per year</div>
         </div>
-        <div class="hover-lift">
-          <div class="text-5xl font-bold mb-2">10K+</div>
-          <div class="text-sm opacity-80">Items shared instead of bought</div>
+        <div class="text-center">
+          <div class="text-4xl font-bold text-blue-600 mb-2">10M L</div>
+          <div class="text-gray-600">Water Saved</div>
+          <div class="text-sm text-gray-500 mt-1">per year</div>
         </div>
-        <div class="hover-lift">
-          <div class="text-5xl font-bold mb-2">500+</div>
-          <div class="text-sm opacity-80">Local businesses participating</div>
+        <div class="text-center">
+          <div class="text-4xl font-bold text-purple-600 mb-2">500K</div>
+          <div class="text-gray-600">Items Shared</div>
+          <div class="text-sm text-gray-500 mt-1">less waste</div>
         </div>
-        <div class="hover-lift">
-          <div class="text-5xl font-bold mb-2">100+</div>
-          <div class="text-sm opacity-80">Neighborhoods already waiting</div>
+        <div class="text-center">
+          <div class="text-4xl font-bold text-orange-600 mb-2">1,000+</div>
+          <div class="text-gray-600">Neighborhoods</div>
+          <div class="text-sm text-gray-500 mt-1">transformed</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ==================== FAQ ==================== -->
-  <section id="faq" class="py-20 bg-gray-50">
+  <!-- Early Adopter Benefits -->
+  <section class="py-20 bg-gradient-to-br from-emerald-50 to-blue-50">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h2 class="text-4xl font-bold mb-4">🎁 Early Adopter Perks</h2>
+      <p class="text-xl text-gray-600 mb-12">Join the waitlist today and get exclusive benefits</p>
+      
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-xl p-6 shadow-lg hover-lift">
+          <div class="text-4xl mb-4">🏅</div>
+          <h3 class="font-bold text-lg mb-2">Founder Badge</h3>
+          <p class="text-gray-600 text-sm">Exclusive badge that shows you were here from the start</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 shadow-lg hover-lift">
+          <div class="text-4xl mb-4">⚡</div>
+          <h3 class="font-bold text-lg mb-2">Priority Access</h3>
+          <p class="text-gray-600 text-sm">Be first to try new features before anyone else</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 shadow-lg hover-lift">
+          <div class="text-4xl mb-4">💎</div>
+          <h3 class="font-bold text-lg mb-2">Lifetime Pro Free</h3>
+          <p class="text-gray-600 text-sm">First 500 members get Pro features free forever</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-20">
     <div class="max-w-3xl mx-auto px-4">
       <h2 class="text-4xl font-bold text-center mb-12">Frequently Asked Questions</h2>
       
       <div class="space-y-4">
-        <div class="bg-white rounded-xl shadow-sm">
-          <button onclick="toggleFaq(1)" class="w-full px-6 py-4 flex justify-between items-center text-left">
-            <span class="font-semibold">Is GreenRadius free to use?</span>
-            <span id="faq-icon-1" class="text-2xl text-emerald-600">+</span>
+        <div class="bg-white rounded-xl shadow-sm hover-lift">
+          <button onclick="toggleFaq(0)" class="faq-btn w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition">
+            <span class="font-semibold">When will GreenRadius launch?</span>
+            <span id="faq-icon-0">+</span>
+          </button>
+          <div id="faq-content-0" class="hidden px-6 pb-4 text-gray-600">
+            We're targeting Q1 2026 for our initial launch in select cities. Waitlist members will get early access before the public launch. Join now to be first in line!
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-xl shadow-sm hover-lift">
+          <button onclick="toggleFaq(1)" class="faq-btn w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition">
+            <span class="font-semibold">Is joining the waitlist free?</span>
+            <span id="faq-icon-1">+</span>
           </button>
           <div id="faq-content-1" class="hidden px-6 pb-4 text-gray-600">
-            Yes! GreenRadius is free for all residents. We make money through partnerships with local businesses and property managers, not from you.
+            Absolutely! Joining the waitlist is 100% free. We'll never spam you or share your email. You'll only receive updates about our launch and early access opportunities.
           </div>
         </div>
         
-        <div class="bg-white rounded-xl shadow-sm">
-          <button onclick="toggleFaq(2)" class="w-full px-6 py-4 flex justify-between items-center text-left">
-            <span class="font-semibold">When will GreenRadius launch?</span>
-            <span id="faq-icon-2" class="text-2xl text-emerald-600">+</span>
-          </button>
-          <div id="faq-content-2" class="hidden px-6 pb-4 text-gray-600">
-            We're launching our first pilot neighborhoods in Salt Lake City in early 2024. Join the waitlist to be among the first to try it!
-          </div>
-        </div>
-        
-        <div class="bg-white rounded-xl shadow-sm">
-          <button onclick="toggleFaq(3)" class="w-full px-6 py-4 flex justify-between items-center text-left">
-            <span class="font-semibold">How do the rewards work?</span>
-            <span id="faq-icon-3" class="text-2xl text-emerald-600">+</span>
+        <div class="bg-white rounded-xl shadow-sm hover-lift">
+          <button onclick="toggleFaq(3)" class="faq-btn w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition">
+            <span class="font-semibold">What if there's no one in my neighborhood yet?</span>
+            <span id="faq-icon-3">+</span>
           </button>
           <div id="faq-content-3" class="hidden px-6 pb-4 text-gray-600">
-            Complete challenges to earn points. Redeem points for discounts and freebies at participating local businesses in your neighborhood.
+            You'll be the pioneer! Start with solo challenges and we'll help you invite neighbors. Plus, you can still compete in city-wide challenges and connect with the broader GreenRadius community. Early adopters get special founder badges!
           </div>
         </div>
         
-        <div class="bg-white rounded-xl shadow-sm">
-          <button onclick="toggleFaq(4)" class="w-full px-6 py-4 flex justify-between items-center text-left">
-            <span class="font-semibold">Is my data private?</span>
-            <span id="faq-icon-4" class="text-2xl text-emerald-600">+</span>
+        <div class="bg-white rounded-xl shadow-sm hover-lift">
+          <button onclick="toggleFaq(4)" class="faq-btn w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition">
+            <span class="font-semibold">Can businesses participate?</span>
+            <span id="faq-icon-4">+</span>
           </button>
           <div id="faq-content-4" class="hidden px-6 pb-4 text-gray-600">
-            Absolutely. You control what neighbors can see. Your exact address is never shared — only your neighborhood. We never sell your data.
+            Yes! Businesses can sponsor challenges, offer rewards, and get verified as green businesses. We have special plans for companies wanting to engage employees. Contact us for our business solutions.
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ==================== FINAL CTA ==================== -->
-  <section class="py-20 bg-gradient-to-r from-emerald-600 to-blue-600 text-white">
+  <!-- Final CTA -->
+  <section class="py-20 bg-gradient-to-br from-emerald-600 via-blue-600 to-purple-600 text-white">
     <div class="max-w-4xl mx-auto px-4 text-center">
       <h2 class="text-4xl md:text-5xl font-bold mb-6">
-        Ready to Transform Your Neighborhood?
+        Be the First to Make a Difference
       </h2>
       <p class="text-xl mb-8 opacity-90">
-        Join the waitlist and be the first to make a real difference in your community
+        Join others ready to transform their neighborhoods
       </p>
-      <button type="button" class="bg-white text-emerald-600 px-10 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition hover:scale-105 join-waitlist-btn">
-        Join the Waitlist Now →
-      </button>
-      <p class="mt-6 text-sm opacity-75">
-        No spam • Early access guaranteed • Be among the first 1,000
+      
+      <form id="footer-waitlist-form" class="max-w-md mx-auto">
+        <div class="flex flex-col sm:flex-row gap-3">
+          <input 
+            type="email" 
+            name="email_address"
+            id="footer-email-input"
+            placeholder="📧 Enter your email" 
+            class="flex-1 px-6 py-4 rounded-full text-gray-900 focus:outline-none focus:ring-2 focus:ring-white"
+          >
+          <button type="button" class="bg-white text-emerald-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition hover:scale-105 shadow-xl whitespace-nowrap join-waitlist-btn" data-email-input="footer-email-input">
+            Join Waitlist 🚀
+          </button>
+        </div>
+      </form>
+      
+      <p class="mt-6 text-sm opacity-75 text-center">
+        • Unsubscribe anytime • Early access guaranteed
       </p>
     </div>
   </section>
 
-  <!-- Footer Component -->
-  <div data-component="footer"></div>
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-16">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid md:grid-cols-4 gap-8 mb-8">
+        <div class="md:col-span-2">
+          <div class="flex items-center space-x-2 mb-4">
+            <img src="images/green-logo.png" alt="GreenRadius Logo" width="28" height="28" class="object-contain">
+            <span class="font-bold text-xl">GreenRadius</span>
+          </div>
+          <p class="text-gray-400 mb-4">
+            Making sustainable living social. Coming 2026.
+          </p>
+          <div class="flex gap-4">
+            <a href="#" class="text-gray-400 hover:text-white transition">📧</a>
+            <a href="#" class="text-gray-400 hover:text-white transition">🐦</a>
+            <a href="#" class="text-gray-400 hover:text-white transition">📷</a>
+            <a href="#" class="text-gray-400 hover:text-white transition">💼</a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="font-semibold mb-4">Product</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="features.html" class="hover:text-white transition">Features</a></li>
+            <li><a href="#faq" class="hover:text-white transition">FAQ</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="font-semibold mb-4">Company</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="about.html" class="hover:text-white transition">About</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+        <p>© 2025 GreenRadius. Made with 💚 for our planet.</p>
+      </div>
+    </div>
+  </footer>
 
-  <!-- Notification Component -->
-  <div data-component="notification"></div>
+  <!-- Floating notification -->
+  <div id="notification" class="fixed bottom-4 left-4 bg-white rounded-lg shadow-xl p-4 max-w-sm z-40 hidden animate-slide-in">
+    <button onclick="hideNotification()" class="absolute top-2 right-2 text-gray-400 hover:text-gray-600">×</button>
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-gradient-to-br from-emerald-400 to-blue-500 rounded-full flex items-center justify-center text-white text-lg">🌱</div>
+      <div>
+        <div class="font-semibold" id="notification-location">Someone</div>
+        <div class="text-sm text-gray-600" id="notification-message"></div>
+      </div>
+    </div>
+  </div>
 
-  <!-- Waitlist Modal Component -->
-  <div data-component="waitlist-modal"></div>
+  <!-- Waitlist Modal -->
+  <div id="waitlist-modal" class="fixed inset-0 bg-black/40 z-50 flex items-center justify-center hidden overflow-y-auto p-4">
+    <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-lg w-full relative my-8">
+      <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl">×</button>
+      <h2 id="modal-title" class="text-2xl font-bold mb-4 text-center">Join the Waitlist</h2>
+      <form id="modal-waitlist-form" class="space-y-4">
+        <div class="flex gap-4">
+          <input type="text" name="first_name" id="modal-first-name" placeholder="First Name" required class="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500">
+          <input type="text" name="last_name" id="modal-last-name" placeholder="Last Name" required class="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500">
+        </div>
+        <input type="email" name="email_address" id="modal-email" placeholder="Email" required class="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500">
+        <div class="flex gap-4">
+          <input type="text" name="city" id="modal-city" placeholder="City" required class="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500">
+          <input type="text" name="state" id="modal-state" placeholder="State" required class="flex-1 px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500">
+        </div>
+        <input type="text" name="company" id="modal-company" placeholder="Company (optional)" class="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:border-emerald-500">
+        <textarea name="comment" id="modal-comment" placeholder="What are you excited about, want, or any concerns?" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-emerald-500"></textarea>
+        <button type="submit" class="w-full bg-emerald-600 text-white py-3 rounded-full font-semibold hover:bg-emerald-700 transition hover:scale-105">Submit</button>
+        <div id="modal-form-message" class="hidden"></div>
+      </form>
+    </div>
+  </div>
 
-  <!-- Scripts -->
-  <script src="js/components.js"></script>
-  <script src="js/main.js"></script>
+  <script>
+    // Mobile menu toggle
+    document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+
+    // Modal logic
+    const waitlistModal = document.getElementById('waitlist-modal');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const modalForm = document.getElementById('modal-waitlist-form');
+    const modalEmail = document.getElementById('modal-email');
+    const modalFormMessage = document.getElementById('modal-form-message');
+
+    function openWaitlistModal(email = '') {
+      waitlistModal.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+      // Reset modal title in case it was changed from previous submission
+      document.getElementById('modal-title').textContent = 'Join the Waitlist';
+      // Ensure form is visible (in case it was hidden from previous submission)
+      modalForm.classList.remove('hidden');
+      modalFormMessage.classList.add('hidden');
+      modalFormMessage.innerHTML = '';
+      modalForm.reset();
+      if (email) {
+        modalEmail.value = email;
+      }
+    }
+
+    function closeWaitlistModal() {
+      waitlistModal.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+      modalForm.reset();
+      modalFormMessage.classList.add('hidden');
+      modalFormMessage.innerHTML = '';
+    }
+
+    closeModalBtn.addEventListener('click', closeWaitlistModal);
+    waitlistModal.addEventListener('click', function(e) {
+      if (e.target === waitlistModal) closeWaitlistModal();
+    });
+
+    // Attach modal open to all join buttons (event delegation) after DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+      document.body.addEventListener('click', function(e) {
+        const btn = e.target.closest('.join-waitlist-btn');
+        if (btn) {
+          e.preventDefault();
+          // Check if button has data-email-input attribute
+          const emailInputId = btn.getAttribute('data-email-input');
+          let email = '';
+          if (emailInputId) {
+            const input = document.getElementById(emailInputId);
+            if (input) email = input.value;
+          }
+          openWaitlistModal(email);
+        }
+      });
+    });
+
+    // Modal form submission
+    modalForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const submitBtn = modalForm.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<span class="animate-pulse">Joining...</span>';
+      submitBtn.disabled = true;
+
+      // Gather form data
+      const formData = {
+        first_name: document.getElementById('modal-first-name').value,
+        last_name: document.getElementById('modal-last-name').value,
+        email_address: document.getElementById('modal-email').value,
+        city: document.getElementById('modal-city').value,
+        state: document.getElementById('modal-state').value,
+        company: document.getElementById('modal-company').value,
+        comment: document.getElementById('modal-comment').value
+      };
+
+      try {
+        const response = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+        const data = await response.json();
+        if (data.success) {
+          // Update modal title to success state
+          document.getElementById('modal-title').textContent = "You're In! 🎉";
+          modalForm.classList.add('hidden');
+          modalFormMessage.classList.remove('hidden');
+          modalFormMessage.innerHTML = `<div class="text-center py-4"><div class="text-4xl mb-2">✅</div><p class="text-lg font-semibold text-emerald-600">You've joined the waitlist!</p><p class="text-sm text-gray-600 mt-2">We'll notify you when GreenRadius launches in your area. Check your inbox for a confirmation email.</p></div>`;
+          // Fire Meta Pixel Lead event
+          trackEvent('Lead', {
+            content_name: 'Waitlist Signup',
+            content_category: 'signup',
+          });
+          // Also update notification message immediately
+          document.getElementById('notification-message').textContent = 'joined the waitlist! 🎉';
+          fetchRecentSubscribers();
+        } else {
+          throw new Error(data.error || 'Subscription failed');
+        }
+      } catch (error) {
+        modalFormMessage.classList.remove('hidden');
+        modalFormMessage.innerHTML = `<p class="text-red-500 text-sm mt-2">Something went wrong. Please try again.</p>`;
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+      }
+    });
+    
+    // Tab functionality
+    function setActiveTab(tabId) {
+      // Hide all content
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      // Show selected content
+      document.getElementById('content-' + tabId).classList.remove('hidden');
+      
+      // Update button styles
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-emerald-600', 'text-white');
+        btn.classList.add('text-gray-600');
+      });
+      document.getElementById('tab-' + tabId).classList.add('bg-emerald-600', 'text-white');
+      document.getElementById('tab-' + tabId).classList.remove('text-gray-600');
+    }
+    
+    // FAQ toggle
+    function toggleFaq(index) {
+      const content = document.getElementById('faq-content-' + index);
+      const icon = document.getElementById('faq-icon-' + index);
+      
+      if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        icon.textContent = '−';
+      } else {
+        content.classList.add('hidden');
+        icon.textContent = '+';
+      }
+    }
+    
+    // Store for recent subscribers
+    let recentSubscribers = [];
+    let currentNotificationIndex = 0;
+    
+    // Fetch recent subscribers from Mailchimp via Netlify function
+    async function fetchRecentSubscribers() {
+      try {
+        const response = await fetch('/api/recent-subscribers');
+        const data = await response.json();
+        
+        if (data.subscribers && data.subscribers.length > 0) {
+          recentSubscribers = data.subscribers;
+        }
+        
+        // Update waitlist count with real data
+        if (data.totalCount) {
+          updateWaitlistCount(data.totalCount);
+        }
+      } catch (error) {
+        console.error('Error fetching subscribers:', error);
+      }
+    }
+    
+    // Update waitlist count display
+    function updateWaitlistCount(count) {
+      const countEl = document.getElementById('waitlist-count');
+      const footerCountEl = document.getElementById('footer-count');
+      if (countEl) countEl.textContent = count + ' people';
+      if (footerCountEl) footerCountEl.textContent = count;
+    }
+    
+    // Show notification with real subscriber data (city, state aware)
+    function showNotification() {
+      const notification = document.getElementById('notification');
+      const locationEl = document.getElementById('notification-location');
+      const messageEl = document.getElementById('notification-message');
+
+      if (recentSubscribers.length > 0) {
+        const subscriber = recentSubscribers[currentNotificationIndex];
+        // Prefer city, state, fallback to location, fallback to generic
+        const city = subscriber.city && subscriber.city.trim() ? subscriber.city.trim() : '';
+        const state = subscriber.state && subscriber.state.trim() ? subscriber.state.trim() : '';
+        let location = '';
+        if (city && state) {
+          location = `${city}, ${state}`;
+        } else if (city) {
+          location = city;
+        } else if (state) {
+          location = state;
+        } else if (subscriber.location && subscriber.location.trim()) {
+          location = subscriber.location.trim();
+        }
+        const timeAgo = getTimeAgo(subscriber.timestamp);
+
+        if (location) {
+          locationEl.textContent = `Someone from ${location}`;
+        } else {
+          locationEl.textContent = `Someone`;
+        }
+        // Always use 'joined the waitlist' (past tense)
+        messageEl.textContent = `joined the waitlist${timeAgo ? ' ' + timeAgo : ''}! 🎉`;
+
+        // Cycle through subscribers
+        currentNotificationIndex = (currentNotificationIndex + 1) % recentSubscribers.length;
+      } else {
+        // Fallback when no subscriber data available
+        locationEl.textContent = 'Someone';
+        messageEl.textContent = 'joined the waitlist recently! 🎉';
+      }
+
+      notification.classList.remove('hidden');
+
+      // Auto-hide after 5 seconds
+      setTimeout(() => {
+        hideNotification();
+      }, 5000);
+    }
+    
+    // Get human-readable time ago
+    function getTimeAgo(timestamp) {
+      if (!timestamp) return 'recently';
+      
+      const now = new Date();
+      const then = new Date(timestamp);
+      const diffMs = now - then;
+      const diffMins = Math.floor(diffMs / 60000);
+      const diffHours = Math.floor(diffMs / 3600000);
+      const diffDays = Math.floor(diffMs / 86400000);
+      
+      if (diffMins < 1) return 'just now';
+      if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
+      if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+      if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+      return 'recently';
+    }
+    
+    function hideNotification() {
+      document.getElementById('notification').classList.add('hidden');
+    }
+    
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', async function() {
+      // Fetch real subscriber data
+      await fetchRecentSubscribers();
+      
+      // Show first notification after 5 seconds
+      setTimeout(() => {
+        showNotification();
+      }, 5000);
+      
+      // Show notifications periodically (every 60 seconds)
+      setInterval(() => {
+        showNotification();
+      }, 60000);
+    });
+  </script>
 </body>
 </html>

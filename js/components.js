@@ -76,6 +76,12 @@ const ComponentLoader = {
   async initAll() {
     const elements = document.querySelectorAll('[data-component]');
     
+    if (elements.length === 0) {
+      console.log('[Components] No components to load');
+      document.dispatchEvent(new CustomEvent('componentsLoaded'));
+      return;
+    }
+    
     const promises = Array.from(elements).map(async (el) => {
       const componentName = el.dataset.component;
       const position = el.dataset.position || 'replace';
