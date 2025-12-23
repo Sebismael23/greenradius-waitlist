@@ -13,7 +13,29 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { email_address, first_name, last_name, city, state, company, comment } = req.body;
+  // Handle both flat format and merge_fields format
+  const body = req.body;
+  let email_address, first_name, last_name, city, state, company, comment;
+
+  if (body.merge_fields) {
+    // New format from main.js
+    email_address = body.email_address;
+    first_name = body.merge_fields.FNAME || '';
+    last_name = body.merge_fields.LNAME || '';
+    city = body.merge_fields.CITY || '';
+    state = body.merge_fields.STATE || '';
+    company = body.merge_fields.COMPANY || '';
+    comment = body.merge_fields.COMMENT || '';
+  } else {
+    // Legacy flat format
+    email_address = body.email_address;
+    first_name = body.first_name || '';
+    last_name = body.last_name || '';
+    city = body.city || '';
+    state = body.state || '';
+    company = body.company || '';
+    comment = body.comment || '';
+  }
 
   if (!email_address) {
     return res.status(400).json({ error: 'Email is required' });
@@ -34,12 +56,12 @@ export default async function handler(req, res) {
     email_address,
     status: 'subscribed',
     merge_fields: {
-      FNAME: first_name || '',
-      LNAME: last_name || '',
-      CITY: city || '',
-      STATE: state || '',
-      COMPANY: company || '',
-      COMMENT: comment || ''
+      FNAME: first_name,
+      LNAME: last_name,
+      CITY: city,
+      STATE: state,
+      COMPANY: company,
+      COMMENT: comment
     }
   };
 

@@ -1,106 +1,141 @@
 # GreenRadius Waitlist Landing Page
 
-A standalone landing page for collecting waitlist signups before the full GreenRadius app launches.
+A modern, component-based landing page for collecting waitlist signups before the full GreenRadius app launches.
 
 ## 🚀 Quick Start
 
-Just open `index.html` in your browser - no build process needed!
+### Local Development
 
 ```bash
-# On macOS
-open index.html
-
-# Or use a simple HTTP server
+# Start a simple HTTP server (components require it)
 python3 -m http.server 8000
 # Then visit http://localhost:8000
+```
+
+**Note:** Opening `index.html` directly won't work because components are loaded via fetch, which requires an HTTP server.
+
+### Deploy to Vercel
+
+```bash
+vercel
 ```
 
 ## 📁 Structure
 
 ```
 greenradius-waitlist/
-├── index.html      # Main landing page
-├── images/
-│   └── green-logo.png
-└── README.md
+├── index.html           # Main landing page
+├── about.html           # About page
+├── features.html        # Features page
+├── components/          # Reusable HTML components
+│   ├── navbar.html      # Navigation bar
+│   ├── footer.html      # Footer section
+│   ├── cta-section.html # Call-to-action section
+│   ├── waitlist-modal.html # Waitlist signup modal
+│   └── notification.html # Social proof notification
+├── js/
+│   ├── components.js    # Component loader system
+│   └── main.js          # Main JavaScript (modal, forms, etc.)
+├── api/                 # Vercel serverless functions
+│   ├── subscribe.js     # Mailchimp subscription endpoint
+│   └── recent-subscribers.js # Social proof data
+├── css/
+│   └── styles.css       # Additional styles
+└── images/
+    └── green-logo.png
 ```
 
 ## ✨ Features
 
-- **Waitlist signup forms** - Hero section and footer
-- **Local storage** - Stores emails locally for demo (replace with your email service)
-- **Social proof** - Shows signup count
-- **FAQ section** - Common questions answered
-- **Mobile responsive** - Works on all devices
-- **Animations** - Smooth, engaging interactions
-- **No dependencies** - Pure HTML + Tailwind CDN
+- **Component System** - Reusable HTML components loaded via JavaScript
+- **Waitlist Modal** - Beautiful signup modal with full form
+- **Mailchimp Integration** - Direct integration with Mailchimp API
+- **Social Proof** - Shows recent signups from real data
+- **FAQ Section** - Expandable FAQ with smooth animations
+- **Mobile Responsive** - Works beautifully on all devices
+- **Animations** - Smooth, engaging micro-interactions
+- **Meta Pixel** - Facebook/Meta tracking integration
+- **No Build Step** - Pure HTML + Tailwind CDN
 
-## 🔧 Customization
+## 🔧 Configuration
 
-### Connect to Email Service
+### Environment Variables (Vercel)
 
-Replace the `handleWaitlistSubmit` function in the `<script>` section with your email service:
+Set these in your Vercel project settings:
 
-**Mailchimp:**
-```javascript
-// Replace localStorage with Mailchimp API call
-fetch('YOUR_MAILCHIMP_ENDPOINT', {
-  method: 'POST',
-  body: JSON.stringify({ email: email }),
-  headers: { 'Content-Type': 'application/json' }
-});
+```
+MAILCHIMP_API_KEY=your-api-key-here
+MAILCHIMP_LIST_ID=your-list-id-here
+MAILCHIMP_SERVER_PREFIX=us21  # or your server prefix
 ```
 
-**ConvertKit:**
+See `MAILCHIMP_SETUP.md` for detailed setup instructions.
+
+### Meta Pixel
+
+The Meta Pixel is already integrated. Update the Pixel ID in the `<head>` section of each page if needed:
+
 ```javascript
-fetch('https://api.convertkit.com/v3/forms/YOUR_FORM_ID/subscribe', {
-  method: 'POST',
-  body: JSON.stringify({ 
-    api_key: 'YOUR_API_KEY',
-    email: email 
-  }),
-  headers: { 'Content-Type': 'application/json' }
-});
+fbq('init', 'YOUR_PIXEL_ID');
 ```
-
-**Supabase:**
-```javascript
-const { error } = await supabase
-  .from('waitlist')
-  .insert({ email: email, joined_at: new Date() });
-```
-
-### Update Content
-
-- Edit text directly in `index.html`
-- Change colors by modifying Tailwind classes (e.g., `emerald-600` to `green-600`)
-- Update the base waitlist count (currently 847) in the JavaScript section
 
 ## 🌐 Deployment
 
-This is a static site - deploy anywhere:
+### Vercel (Recommended)
 
-- **Vercel**: Drag & drop the folder
-- **Netlify**: Connect to Git or drag & drop
-- **GitHub Pages**: Push to a repo and enable Pages
-- **Cloudflare Pages**: Connect to Git
+1. Push to GitHub
+2. Import in Vercel
+3. Add environment variables
+4. Deploy!
+
+The API endpoints in `/api` will automatically become serverless functions.
+
+### Other Platforms
+
+For Netlify or other platforms, you'll need to:
+1. Create equivalent serverless functions
+2. Update the API endpoints in `main.js` if paths differ
 
 ## 📊 Analytics
 
-Add your analytics snippet before `</body>`:
+Meta Pixel is pre-configured. Events tracked:
+- `PageView` - On every page load
+- `Lead` - When someone joins the waitlist
+
+## 🧩 Component System
+
+Components are loaded using `data-component` attributes:
 
 ```html
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'GA_MEASUREMENT_ID');
-</script>
+<!-- Load the navbar component -->
+<div data-component="navbar"></div>
+
+<!-- Load the footer component -->
+<div data-component="footer"></div>
 ```
+
+The `components.js` file handles:
+- Loading components via fetch
+- Caching loaded components
+- Setting active navigation states
+- Initializing mobile menu after load
+
+## 📝 Development
+
+### Adding a New Page
+
+1. Create a new HTML file (copy structure from `about.html`)
+2. Add components using `data-component` attributes
+3. Include the scripts at the bottom:
+   ```html
+   <script src="js/components.js"></script>
+   <script src="js/main.js"></script>
+   ```
+
+### Modifying Components
+
+Edit files in the `/components` directory. Changes will reflect on all pages.
 
 ## 📝 License
 
 MIT - Use freely for your projects!
-# greenradius-waitlist
