@@ -164,20 +164,13 @@ async function handleModalFormSubmit(e) {
   const formData = {
     email_address: document.getElementById('modal-email')?.value || '',
     merge_fields: {
-      FNAME: document.getElementById('modal-first-name')?.value || '',
-      LNAME: document.getElementById('modal-last-name')?.value || '',
-      CITY: document.getElementById('modal-city')?.value || '',
-      STATE: document.getElementById('modal-state')?.value || '',
-      COMPANY: document.getElementById('modal-company')?.value || '',
-      COMMENT: document.getElementById('modal-comment')?.value || ''
+      CITY: document.getElementById('modal-city')?.value || ''
     }
   };
 
-  const firstName = formData.merge_fields.FNAME;
-
-  // Validate
-  if (!formData.email_address || !firstName) {
-    showFormMessage(messageDiv, 'Please fill in required fields (First Name and Email).', 'error');
+  // Validate - only email is required
+  if (!formData.email_address) {
+    showFormMessage(messageDiv, 'Please enter your email address.', 'error');
     return;
   }
 
@@ -217,7 +210,7 @@ async function handleModalFormSubmit(e) {
           <div class="text-center py-8">
             <div class="text-6xl mb-4 success-checkmark">✅</div>
             <h3 class="text-2xl font-bold text-emerald-600 mb-2">You're on the list!</h3>
-            <p class="text-gray-600 mb-4">Thanks for joining${firstName ? ', ' + firstName : ''}!</p>
+            <p class="text-gray-600 mb-4">Thanks for joining!</p>
             <p class="text-sm text-gray-500">Check your email for confirmation.</p>
           </div>
         `;
